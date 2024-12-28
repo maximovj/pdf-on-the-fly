@@ -10,3 +10,9 @@
         <i class='nav-icon la la-question'></i> Archivos PDF
     </a>
 </li>
+
+<li class='nav-item'>
+    <a class='nav-link' href='{{ backpack_url('generate-pdf') }}'>
+        <i class='nav-icon la la-question'></i> Generados PDF
+    </a>
+</li>
