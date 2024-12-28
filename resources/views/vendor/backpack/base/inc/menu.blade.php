@@ -3,7 +3,7 @@
 <!-- =================================================== -->
 <ul class="nav navbar-nav d-md-down-none">
 
-    @if (backpack_auth()->check())
+    @if (backpack_auth()->guest())
         <!-- Topbar. Contains the left part -->
         @include(backpack_view('inc.topbar_left_content'))
     @endif
