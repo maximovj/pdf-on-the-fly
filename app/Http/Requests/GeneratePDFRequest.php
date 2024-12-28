@@ -37,7 +37,7 @@ class GeneratePDFRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
+            'ip' =>  'dirección ip'
         ];
     }
 
@@ -49,7 +49,7 @@ class GeneratePDFRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'ip.required' => 'La dirección IP es requerido.',
         ];
     }
 }

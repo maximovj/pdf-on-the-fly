@@ -29,6 +29,23 @@ class GeneratePDFCrudController extends CrudController
         CRUD::setModel(\App\Models\GeneratePDF::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/generate-pdf');
         CRUD::setEntityNameStrings('Generados PDF', 'Generados PDF');
+        CRUD::addClause('where', 'ip', '=', request()->ip());
+    }
+
+    /**
+     * Define what happens when the show operation is loaded.
+     *
+     * @see  https://backpackforlaravel.com/docs/4.1/crud-operation-show#how-to-use
+     * @return void
+     */
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+        // by changing this config for the Show operation
+        $this->crud->set('show.setFromDb', false);
+        $this->addColumns();
+
     }
 
     /**
@@ -51,6 +68,8 @@ class GeneratePDFCrudController extends CrudController
 
     protected function addColumns()
     {
+        $this->crud->column('id');
+
         $this->crud->addColumn([
             'name' => 'ip',
             'type' => 'text',
@@ -73,7 +92,17 @@ class GeneratePDFCrudController extends CrudController
             'name'  => 'generated',
             'label' => 'Estado',
             'type'  => 'boolean',
-            'options' => [0 => 'Borrador', 1 => 'Generado']
+            'options' => [0 => 'Borrador', 1 => 'Generado'],
+            'wrapper' => [
+                'element' => 'span',
+                'class' => function ($crud, $column, $entry, $related_key) {
+                    if ($column['text'] == 'Generado') {
+                        return 'badge badge-success';
+                    }
+
+                    return 'badge badge-default';
+                },
+            ],
         ]);
     }
 
@@ -87,8 +116,6 @@ class GeneratePDFCrudController extends CrudController
     {
         CRUD::setValidation(GeneratePDFRequest::class);
         $this->addFields();
-
-
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -113,7 +140,7 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->addField([
             'name'  => 'ip',
             'label' => "Dirección IP",
-            'default' => '255.0.0.0',
+            'default' => request()->ip(),
             'type'  => 'text',
             'attributes' => [
                 'placeholder' => 'Ingrese su dirección IP',
