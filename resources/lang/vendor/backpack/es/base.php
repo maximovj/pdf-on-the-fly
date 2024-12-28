@@ -51,7 +51,7 @@ return [
     'unknown_error'          => 'Ha ocurrido un error. Por favor vuelva a intenter.',
     'error_saving'           => 'Error mientras se guardaba. Por favor vuelva a intenter.',
     'welcome'                => '¡Bienvenido!',
-    'use_sidebar'            => 'Use la barra lateral a la izquierda para crear, editar o eliminar contenido.',
+    'use_sidebar'            => 'Use la barra lateral a la izquierda para navegar entre las opciones. <br/> Este sistema sirve para generar PDF en línea.',
 
     'password_reset' => [
         'greeting' => '¡Hola!',
