@@ -12,3 +12,6 @@ $ php artisan backpack:publish base/inc/menu
 
 # Eliminar cache y recargar configuración
 $ php artisan optimize
+
+# Publicar traducciones disponibles
+$ php artisan vendor:publish --provider="Backpack\CRUD\BackpackServiceProvider" --tag="lang"
