@@ -5,20 +5,23 @@
     </a>
 </li>
 
+{{-- BackPack Crud Controller | FilePDFCrudController --}}
 <li class='nav-item'>
     <a class='nav-link' href='{{ backpack_url('file-pdf') }}'>
-        <i class='nav-icon la la-question'></i> Archivos PDF
+        <i class='nav-icon la la-file-pdf'></i> Archivos PDF
     </a>
 </li>
 
-<li class='nav-item'>
-    <a class='nav-link' href='{{ backpack_url('generate-pdf') }}'>
-        <i class='nav-icon la la-question'></i> Generados PDF
-    </a>
-</li>
-
+{{-- BackPack Crud Controller | ViewFormCrudController --}}
 <li class='nav-item'>
     <a class='nav-link' href='{{ backpack_url('view-form') }}'>
-        <i class='nav-icon la la-question'></i> Formularios
+        <i class='nav-icon la la-th-list'></i> Formularios
+    </a>
+</li>
+
+{{-- BackPack Crud Controller | GeneratePDFCrudController --}}
+<li class='nav-item'>
+    <a class='nav-link' href='{{ backpack_url('generate-pdf') }}'>
+        <i class='nav-icon la la-file-text-o'></i> Generados PDF
     </a>
 </li>
