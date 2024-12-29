@@ -105,6 +105,66 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 </script>
 <script>
     $(document).ready(function() {
+
+        var timer;
+        var jsonData;
+
+        function scan_fields() {
+            // Create a object
+            jsonData = {
+                view_form_id: parseInt("{{ $entry_id }}"),
+                ip: parseInt("{!! $ip !!}"),
+                fields: {}
+            };
+
+            /* This code snippet is iterating over an array of input selectors, which are strings
+            representing different types of input fields. For each selector, it is using
+            `document.querySelectorAll` to find all input fields with names that start with the
+            selector string, as well as textarea fields with names that start with the selector
+            string. */
+            const inputSelectors = ['si', 'no', 'na', 'ref', 'txt', 'txta'];
+
+            inputSelectors.forEach(selector => {
+                //const inputs = document.querySelectorAll(`input[name^="${selector}"], textarea[name^="${selector}"]`);
+                const inputs = document.querySelectorAll(`input, textarea, number`);
+
+                inputs.forEach((input, index) => {
+                    const value = input.type === 'checkbox' ? input.checked ? 'X' : '' : input.value;
+                    const name = input.name;
+                    jsonData.fields[`${name}`] = value;
+                });
+            });
+        }
+
+        $(document).keyup(function() {
+            clearTimeout(timer);
+            scan_fields();
+
+            timer = setTimeout(async function() {
+                // Send the POST request to the server
+                var route = '{{  route("api.v1.view-form.save_draft", ["id" => "~id~"]) }}';
+                route = route.replace('~id~', parseInt("{{ $entry_id }}"));
+
+                await fetch(route, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Origin': "{{ $origin }}",
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify(jsonData),
+                    })
+                    .then(response => response.json())
+                    .then(async data => {
+                        new Noty({
+                            type: data.success ? 'success' : 'error',
+                            text: data.message
+                        }).show();
+                    });
+            }, 1000);
+        });
+
         $('.custom-file-input').on('change', function()
         {
             // Obtiene el elemento 'label' adyacente al input

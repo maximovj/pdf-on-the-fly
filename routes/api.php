@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ViewFormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'v1/view-form'], function () {
+    Route::get('/{id}/generate_pdf',[ViewFormController::class, 'generate_pdf']
+    )->name('api.v1.view-form.generate_pdf');
+
+    Route::post('/{id}/save_pdf',[ViewFormController::class, 'save_pdf'])
+    ->name('api.v1.view-form.save_pdf');
+
+    Route::post('/{id}/save_draft',[ViewFormController::class, 'save_draft'])
+    ->name('api.v1.view-form.save_draft');
 });

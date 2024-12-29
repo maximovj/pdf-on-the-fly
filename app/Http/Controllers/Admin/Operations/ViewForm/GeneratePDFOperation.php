@@ -60,6 +60,9 @@ trait GeneratePDFOperation
 
         // prepare the fields you need to show
         $this->data['entry'] = $entry;
+        $this->data['entry_id'] = $entry->id;
+        $this->data['ip'] = request()->ip();
+        $this->data['origin'] = config('app.url');
         $this->data['crud'] = $this->crud;
         $this->data['title'] = 'Generar PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
