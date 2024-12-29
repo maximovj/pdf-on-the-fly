@@ -60,6 +60,9 @@ return [
 
         // Example (load font-awesome instead of line-awesome):
         // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css',
+
+        // ?? Estilos CSS (Personalizado)
+        'packages/backpack/base/css/custom.css',
     ],
 
     // CSS files that are loaded in all pages, using Laravel's mix() helper
@@ -119,6 +122,22 @@ return [
     // -------
 
     // JS files that are loaded in all pages, using Laravel's asset() helper
+    // this is custom links for /public/js
+    // usage resources\views\vendor\backpack\base\inc\head.blade.php
+    'head_scripts' => [
+        'JQuery v3.6.0' => 'js/lib/jquery-3.6.0.min.js',
+        'PDF-Lib Js v1.17.1' => 'js/lib/pdf-lib.min.js',
+        'Download Js v1.4.7' => 'js/lib/download.js',
+        'SweetAlert2 v2.11' => 'js/lib/sweetalert2@11.js',
+        'Chart.js v4.4.1' => 'js/lib/chart.js',
+        'DataTables Js v1.13.7' => 'js/lib/jquery.dataTables.js',
+
+        // Custom JS
+        'functions.js' => 'js/custom/functions.js',
+        'dashboard.js' => 'js/custom/dashboard.js',
+    ],
+
+    // JS files that are loaded in all pages, using Laravel's asset() helper
     'scripts' => [
         // Backstrap includes jQuery, Bootstrap, CoreUI, PNotify, Popper
         'packages/backpack/base/js/bundle.js',
@@ -136,6 +155,10 @@ return [
         // 'https://unpkg.com/vue@2.4.4/dist/vue.min.js',
         // 'https://unpkg.com/react@16/umd/react.production.min.js',
         // 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
+
+        // ?? Scripts de JavaScript (Personalizado)
+        'js/lib/chart-utils.min.js', // https://github.com/imhvost/chart-utils/blob/master/dist/chart-utils.min.js
+        'js/lib/chart.js', //'https://cdn.jsdelivr.net/npm/chart.js',
     ],
 
     // JS files that are loaded in all pages, using Laravel's mix() helper
