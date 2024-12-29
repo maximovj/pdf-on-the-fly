@@ -3,3 +3,582 @@
 * Backpack Crud / Custom
 *
 */
+
+/*******************************************
+ * CSS Strong Password
+ *******************************************/
+
+ .checkStrongPassword {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    margin: 5px 0px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    /* Agregar transición a la propiedad background-color */
+}
+
+/* Cambiar el color de fondo según el ancho de la barra de progreso */
+.progress-bar[data-width="100"] {
+    background-color: green;
+    opacity: 1;
+}
+
+.progress-bar[data-width="60"] {
+    background-color: green;
+    opacity: 0.8;
+}
+
+.progress-bar[data-width="30"] {
+    background-color: rgb(255, 187, 0);
+    opacity: .6;
+}
+
+.progress-bar[data-width="0"] {
+    background-color: grey;
+    opacity: .3;
+}
+
+/*******************************************
+ * CSS Chart Dount
+ *******************************************/
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 70vh;
+    width: auto;
+}
+
+.chart-dona-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+/* Estilos para pantallas más grandes que 576px */
+@media (min-width: 576px) {
+    .jumbotron {
+        padding: 2rem 2rem;
+        /* Otros estilos para pantallas más grandes aquí */
+    }
+}
+
+/*******************************************
+ * CSS Background
+ *******************************************/
+
+.bg-green {
+    background-color: #007b19 !important;
+}
+
+.bg-yellow {
+    background-color: #e0a419 !important;
+}
+
+.bg-red {
+    background-color: #e0193e !important;
+}
+
+.bg-type-1 {
+    background-color: #C18448 !important;
+    color: white;
+}
+
+.bg-type-2 {
+    background-color: #1994e0 !important;
+    color: white;
+}
+
+.bg-type-3 {
+    background-color: #e0a419 !important;
+    color: white;
+}
+
+.bg-type-3 {
+    background-color: #a819e0 !important;
+    color: white;
+}
+
+.bg-type-4 {
+    background-color: #e01990 !important;
+    color: white;
+}
+
+.bg-type-5 {
+    background-color: #6fcb9f !important;
+    color: white;
+}
+
+.bg-type-6 {
+    background-color: #eea990 !important;
+    color: white;
+}
+
+.bg-type-7 {
+    background-color: #008080 !important;
+    color: white;
+}
+
+.bg-type-8 {
+    background-color: #66545e !important;
+    color: white;
+}
+
+/*******************************************
+ * CSS Text
+ *******************************************/
+
+.txt-white {
+    color: white;
+}
+
+.txt-white:hover {
+    color: white;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+/*******************************************
+ * CSS DataTables
+ *******************************************/
+
+.dataTables_filter {
+    /*display: none;*/
+    display: block;
+}
+
+#tableCompare thead th {
+    white-space: nowrap;
+}
+
+#tableIndices thead th {
+    white-space: nowrap;
+}
+
+div.dataTables_wrapper {
+    /*overflow-x: auto;*/
+    overflow: hidden;
+}
+
+/*******************************************
+ * CSS FlexBox
+ *******************************************/
+
+.flexbox {
+    display: flex;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/*******************************************
+ * CSS Style
+ *******************************************/
+
+.txt-h1-css {
+    display: inline;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.txt-h1-css::before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid #e01919; /* Ajusta el color y el tamaño según lo necesites */
+    margin-right: 8px; /* Ajusta el espacio entre el triángulo y el texto */
+}
+
+.card-header-css {
+    padding: 1rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, .03);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.span-title-helper {
+    font-size: 0.8rem;
+    margin: 0.2rem;
+    color: grey;
+}
+
+.span-button-helper {
+    color: tomato;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+.select-option-disabled {
+    background-color: #eee;
+    color: #aaa;
+    border-bottom: 2px solid #000;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+}
+
+.dropdown-item:active {
+    background-color: #42ba96;
+    color: white !important;
+}
+
+.negative {
+    color: red;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.positive {
+    color: green;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/*******************************************
+ * CSS FontSize
+ *******************************************/
+.fs-8 {
+    font-size: 8px;
+}
+
+ .fs-10 {
+    font-size: 10px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+ .fs-14 {
+    font-size: 14px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
+.fs-28 {
+    font-size: 28px;
+}
+
+.fs-32 {
+    font-size: 32px;
+}
+
+
+/*******************************************
+* CSS DOM
+*******************************************/
+
+.txt-label-css {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.field-req-css {
+    color: red;
+    font-size: 12px;
+}
+
+.field-req-css::after {
+    content: '*';
+    color: red;
+    font-size: 12px;
+}
+
+.required-css {
+    color: red;
+    font-size: 12px;
+}
+
+.required-css::after {
+    content: '*';
+    color: red;
+    font-size: 12px;
+}
+
+
+.d-none {
+    display: none;
+}
+
+/*******************************************
+* List Float
+*******************************************/
+.list-float {
+    display: none;
+    position: absolute;
+    top: 10;
+    /* Cambiado a 100% para que aparezca encima del botón */
+    left: 210px;
+    /*transform: translate(-50%, 0);*/
+    z-index: 1000;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.d-flex-gap-10 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.lst-cbx-contendor-modicar-campos {
+    color: #7f7c7c;
+    font-size: 14px;
+}
+
+.btn-link {
+    color: none;
+    background-color: transparent;
+    border: none;
+}
+
+/*******************************************
+* image css
+*******************************************/
+.img-marcas-css {
+    width: 90px;
+    height: 90px;
+    box-shadow: 0.01rem 0.01rem 0.5rem rgba(3, 70, 31, 0.4);
+    border-radius: 20px;
+    margin: 0.6rem 0rem;
+}
+
+/*******************************************
+* CUSTOM DROPDOWN
+*******************************************/
+
+.dropdown-div-menu {
+    width: 350px;
+    max-width: 350px;
+    text-align: left;
+    text-wrap: pretty;
+    word-break: break-word;
+}
+
+.dropdown-a-text {
+    font-size: 0.8rem;
+    margin: 0.2rem;
+    color: grey;
+    text-wrap: pretty;
+    text-align: left;
+    text-wrap: pretty;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.dropdown-img-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background: white;
+    margin: 0px 4px;
+    object-fit: contain;
+    transform: scale(1);
+    border: 1px white solid;
+}
+
+.dropdown-is-enabled {
+    box-shadow: 0.01em 0.01em 0.22em 0.1em rgb(13, 155, 70);
+}
+
+.dropdown-is-disabled {
+    box-shadow: 0.01em 0.01em 0.22em 0.1em tomato;
+}
+
+.dropdown-item.active:hover {
+    background-color: #7c69ef;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dropdown-h6-header {
+    background: transparent;
+    border: none;
+    color: #506690;
+    display: block;
+    font-weight: 700;
+    font-size: .875rem;
+    margin-bottom: 0;
+    padding: 0 0;
+    text-wrap: pretty;
+    text-align: left;
+    text-wrap: pretty;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+/*******************************************
+ * CSS Media Queries
+ *******************************************/
+
+@media only screen and (max-width: 1260px)
+{
+    .system-header {
+        display: none;
+    }
+}
+
+/*******************************************
+ * CSS Logo
+ *******************************************/
+
+.audfk-logo-app {
+    height:100px;
+    width:240px;
+    margin-top: 10px;
+}
+
+/**********************************************************************
+* WIDTH PORCERT
+***********************************************************************/
+
+.wp-100{
+    width: 100%;
+}
+
+.wp-90{
+    width: 90%;
+}
+
+.wp-80{
+    width: 80%;
+}
+
+.wp-70{
+    width: 70%;
+}
+
+.wp-60{
+    width: 60%;
+}
+
+.wp-50{
+    width: 50%;
+}
+
+.wp-40{
+    width: 40%;
+}
+
+.wp-30{
+    width: 30%;
+}
+
+.wp-20{
+    width: 20%;
+}
+
+/*********************************************************************************
+* DISPLAY FLEX
+**********************************************************************************/
+
+.center-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*******************************************
+* CSS Chart.Js
+********************************************/
+
+.audfk-chart-render {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+.audfk-chart-box {
+    height: 400px;
+    margin: auto;
+}
+
+@media only screen and (max-width: 780px) {
+    .audfk-chart-box {
+        width: 100%;
+        height: 400px;
+    }
+}
+
+/*******************************************
+* CSS TABLE
+********************************************/
+
+.table-responsive-css {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    width: 100%;
+}
+
+@media only screen and (max-width: 780px) {
+    .table-responsive-css {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        width: 100%;
+        display: block;
+    }
+}
+
+.form-check-input-css {
+    width: 1.4rem;
+    height: 1.4rem;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.textarea-wrapper {
+    display: block;
+    min-width: 200px;
+    max-width: 300px;
+    white-space: pre-wrap; /* Ajusta el texto dentro del área visible */
+    word-wrap: break-word; /* Permite el ajuste de palabras largas */
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 80%;
+    transform: translateX(-50%);
+    z-index: 69;
+}
+
+.sticky + .content {
+    padding-top: 60px;
+}

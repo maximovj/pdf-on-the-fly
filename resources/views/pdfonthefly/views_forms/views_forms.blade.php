@@ -37,7 +37,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 <!-- Default box -->
 <div class="row">
     <!-- THE ACTUAL CONTENT -->
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="row mb-0">
             <div class="col-sm-6">
                 <div class="d-print-none with-border">
@@ -51,12 +51,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
         <form onsubmit="fnOnSubmit(event, this)">
         <div class="card my-2">
             <div class="card-body">
-                <div class="row">
-                    <div class="form-group col-sm-12 mb-3 required" element="div" bp-field-wrapper="true" bp-field-name="i-text" bp-field-type="text" bp-section="crud-field">
-                        <label for="i-text"><strong>Lorem ipsum dolor sit amet.</strong></label>
-                        <input type="text" class="form-control" name="i-text" placeholder="Lorem ipsum dolor sit amet." />
-                    </div>
-                </div>
+                @include('pdfonthefly.views_forms.forms.'.$entry_id)
             </div>
         </div>
         <div>
@@ -106,6 +101,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 <script>
     $(document).ready(function() {
 
+        var changeInputs = `input, textarea, select`;
         var timer;
         var jsonData;
 
@@ -122,21 +118,15 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
             `document.querySelectorAll` to find all input fields with names that start with the
             selector string, as well as textarea fields with names that start with the selector
             string. */
-            const inputSelectors = ['si', 'no', 'na', 'ref', 'txt', 'txta'];
-
-            inputSelectors.forEach(selector => {
-                //const inputs = document.querySelectorAll(`input[name^="${selector}"], textarea[name^="${selector}"]`);
-                const inputs = document.querySelectorAll(`input, textarea, number`);
-
-                inputs.forEach((input, index) => {
-                    const value = input.type === 'checkbox' ? input.checked ? 'X' : '' : input.value;
-                    const name = input.name;
-                    jsonData.fields[`${name}`] = value;
-                });
+            const inputs = document.querySelectorAll(changeInputs);
+            inputs.forEach((input, index) => {
+                const value = input.type === 'checkbox' ? input.checked ? 'X' : '' : input.value;
+                const name = input.name;
+                jsonData.fields[`${name}`] = value;
             });
         }
 
-        $(document).keyup(function() {
+        $(changeInputs).change(function() {
             clearTimeout(timer);
             scan_fields();
 
@@ -162,7 +152,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                             text: data.message
                         }).show();
                     });
-            }, 1000);
+            }, 3000);
         });
 
         $('.custom-file-input').on('change', function()
