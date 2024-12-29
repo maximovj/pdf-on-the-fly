@@ -16,3 +16,9 @@
         <i class='nav-icon la la-question'></i> Generados PDF
     </a>
 </li>
+
+<li class='nav-item'>
+    <a class='nav-link' href='{{ backpack_url('view-form') }}'>
+        <i class='nav-icon la la-question'></i> Formularios
+    </a>
+</li>
