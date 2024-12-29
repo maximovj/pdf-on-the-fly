@@ -54,7 +54,6 @@ trait GeneratePDFOperation
         $entry = $this->crud->getEntry($id) ?? $this->crud->getCurrentEntry();
         if($entry == null)
         {
-
             Alert::error('Lo siento, el elemento no fue encontrado')->flash();
             return redirect()->back();
         }
@@ -62,7 +61,9 @@ trait GeneratePDFOperation
         // prepare the fields you need to show
         $this->data['entry'] = $entry;
         $this->data['crud'] = $this->crud;
-        $this->data['title'] = $this->crud->getTitle() ?? 'view_form-generatepdf '.$this->crud->entity_name;
+        $this->data['title'] = 'Generar PDF';
+        $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
+
 
         // load the view
         //return view("crud::operations.generatepdf", $this->data);
