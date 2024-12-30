@@ -20,7 +20,6 @@ class CreateFilesPdfTable extends Migration
             $table->string('file_name')->nullable()->default('NA');
             $table->string('file_extension')->nullable()->default('NA');
             $table->string('file_storage')->nullable()->default('NA');
-            $table->json('fields')->nullable();
             $table->timestamps();
         });
     }
