@@ -31,6 +31,7 @@ class ViewFormCrudController extends CrudController
         CRUD::setModel(\App\Models\ViewForm::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/view-form');
         CRUD::setEntityNameStrings('Formularios', 'Formularios');
+        CRUD::setTitle('Formularios');
     }
 
     /**

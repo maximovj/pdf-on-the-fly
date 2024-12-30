@@ -5,7 +5,7 @@
 @updated 28/12/2024
 --}}
 
-@extends(backpack_view('template.init_datatable'))
+@extends(backpack_view('templates.init_datatable'))
 
 @section("before_styles")
 

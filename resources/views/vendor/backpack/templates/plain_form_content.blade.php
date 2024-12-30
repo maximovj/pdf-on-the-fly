@@ -5,7 +5,7 @@
 @updated 28/12/2024
 --}}
 
-@extends(backpack_view('template.setup_styles_js'))
+@extends(backpack_view('templates.setup_styles_js'))
 
 @php
 $defaultBreadcrumbs = [
@@ -28,6 +28,12 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 <section class="container-fluid">
     <h2>
         <span>{!! ucfirst($title ?? 'Titulo') !!}</span>
+        <small>{!! ucfirst($subtitle ?? 'Subtitulo') !!}</small>
+        <a href="javascript:void(0);" onclick="fnReloadPage()" style="font-size:16px" >Reiniciar</a>
+
+        @if ($crud->hasAccess('list'))
+        <small><a href="{{ url($crud->route) }}" class="d-print-none font-sm"><i class="la la-angle-double-{{ config('backpack.base.html_direction') == 'rtl' ? 'right' : 'left' }}"></i> {{ trans('backpack::crud.back_to_all') }} <span>{{ $crud->entity_name_plural }}</span></a></small>
+        @endif
     </h2>
 </section>
 @endsection

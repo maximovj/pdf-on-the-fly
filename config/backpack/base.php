@@ -62,7 +62,7 @@ return [
         // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css',
 
         // ?? Estilos CSS (Personalizado)
-        'packages/backpack/base/css/custom.css',
+        //'packages/backpack/base/css/custom.css',
     ],
 
     // CSS files that are loaded in all pages, using Laravel's mix() helper
@@ -134,7 +134,7 @@ return [
 
         // Custom JS
         'functions.js' => 'js/custom/functions.js',
-        'dashboard.js' => 'js/custom/dashboard.js',
+        //'dashboard.js' => 'js/custom/dashboard.js',
     ],
 
     // JS files that are loaded in all pages, using Laravel's asset() helper
