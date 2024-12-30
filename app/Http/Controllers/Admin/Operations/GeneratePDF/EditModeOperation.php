@@ -72,6 +72,7 @@ trait EditModeOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = 'Modo Edición PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
+        $this->data['pdfPath'] = asset('storage/' . $view_form->file_storage);
 
         // Recuperar las respuestas anteriores
         session(['edit_mode_fields' => json_decode($entry->fields, true)]);

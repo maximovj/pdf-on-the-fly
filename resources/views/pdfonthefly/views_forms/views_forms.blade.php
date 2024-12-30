@@ -48,7 +48,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                 <div id="datatable_search_stack" class="mt-sm-0 mt-2 d-print-none"></div>
             </div>
         </div>
-        <form id="unique_views_forms" onsubmit="fnOnSubmit(event, this)">
+        <form id="unique_views_forms">
         <div class="card my-2">
             <div class="card-body">
 
@@ -104,38 +104,6 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 @endpush
 
 @push("audfk_after_scripts")
-<script>
-    async function fnOnSubmit(event, form)
-    {
-        event.preventDefault();
-        const descripcion = "Enviando petición, por favor, espere....";
-
-        // Show a success notification bubble
-        new Noty({
-                type: "success",
-                title: "Petición",
-                text: `<strong>Enviando petición</strong><br>${descripcion}`
-            }).show();
-
-        Swal.fire({
-            title: "Petición",
-            text: `${descripcion}`,
-            icon: "success",
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            showCancelButton: false,
-            showCloseButton: false,
-            didOpen: async () => {
-                /* Code here */
-                Swal.showLoading();
-                setTimeout(()=>{ Swal.close(); }, 2000);
-            },
-            willClose: () => {
-                Swal.close();
-            }
-        });
-    }
-</script>
 <script>
     $(document).ready(function() {
 
@@ -204,34 +172,110 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
             }, 3000);
         });
 
-        $('.custom-file-input').on('change', function()
-        {
-            // Obtiene el elemento 'label' adyacente al input
-            var label = $(this).next('.custom-file-label');
 
-            try {
-                // Obtiene el nombre del archivo seleccionado
-                var fileName = $(this).prop('files')[0].name;
-                // Obtiene la extensión del archivo
-                var fileExtension = fileName.split('.').pop().toLowerCase();
-                label.text(fileName);
-            } catch(err) {
-                // Actualiza el texto del label con el nombre del archivo seleccionado
-                label.text("Seleccione un archivo excel...");
-            }
+        $('#unique_views_forms').submit(function(event) {
+            event.preventDefault();
+            const descripcion = "Enviando petición, por favor, espere....";
 
-            // Remove all class
-            $(this).removeClass('is-valid');
-            $(this).removeClass('is-invalid');
+            // Show a success notification bubble
+            new Noty({
+                    type: "success",
+                    title: "Petición",
+                    text: `<strong>Enviando petición</strong><br>${descripcion}`
+                }).show();
 
-            // Verifica si la extensión del archivo es .xlsx o .xls
-            if (fileExtension === 'xlsx' || fileExtension === 'xls') {
-                // Agrega la clase 'is-valid' al campo para aplicar estilos de validación exitosa
-                $(this).addClass('is-valid');
-            } else {
-                // Si la extensión no es .xlsx o .xls, agrega la clase 'is-invalid' para indicar un error de validación
-                $(this).addClass('is-invalid');
-            }
+            Swal.fire({
+                title: "Petición",
+                text: `${descripcion}`,
+                icon: "success",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                showCancelButton: false,
+                showCloseButton: false,
+                didOpen: async () => {
+                    /* Code here */
+                    Swal.showLoading();
+                    //setTimeout(()=>{ Swal.close(); }, 2000);
+
+                    // Tu código existente para cargar el formulario PDF
+                    const {
+                        PDFDocument,
+                        StandardFonts
+                    } = PDFLib;
+
+                    scan_fields();
+
+                    // Get binary PDF
+                    const formUrl = "{{ $pdfPath }}".replace(/\//g, "\\");
+                    const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer());
+
+                    // Get binary Logo and Emblem image (PNG necesary)
+
+                    // Load file .PDF
+                    const pdfDoc = await PDFDocument.load(formPdfBytes);
+
+                    // Get Font Style
+                    const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                    const fontSize = 9;
+                    const maxCharacters = 90;
+
+                    // Get fill form to file PDF
+                    const form = pdfDoc.getForm();
+
+                    Object.keys(jsonData.fields).forEach( keys => {
+                        try {
+                            const input_form_field = form.getTextField(keys);
+                            input_form_field.defaultUpdateAppearances(helvetica);
+                            input_form_field.setFontSize(fontSize);
+                            input_form_field.setText(jsonData.fields[keys] === true ? 'X' : jsonData.fields[keys]);
+                        } catch (error) {}
+                    });
+
+                    //form.flatten();
+
+                    // Serialize the PDFDocument to bytes
+                    const pdfBytes = await pdfDoc.save();
+
+                    // Create a Blob from the PDF bytes
+                    const pdfBlob = new Blob([pdfBytes], {
+                        type: 'application/pdf'
+                    });
+
+                    // Create a FormData object and add the Blob to the form
+                    const formData = new FormData();
+                    formData.append('pdfFile', pdfBlob, 'pdf-generated.pdf');
+                    formData.append('fields', JSON.stringify(jsonData.fields));
+
+                    // Send the POST request to the server
+                    await fetch("{{ route('api.v1.view-form.save_pdf', ['id' => $view_form_id]) }} ", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.close();
+                            new Noty({
+                                type: "success",
+                                text: "El elemento ha sido generado correctamente."
+                            }).show();
+                            // Download the PDF file
+                            download(pdfBytes, data.downloadName, "application/pdf");
+                            //window.open("{{ url('/storage/') }}" + "/"+ data.filePath, '_blank');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.close();
+                        console.error('Error al guardar el PDF:', error);
+                    });
+                },
+                willClose: () => {
+                    Swal.close();
+                }
+            });
         });
     });
 </script>

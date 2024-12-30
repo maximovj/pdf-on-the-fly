@@ -74,6 +74,7 @@ trait GeneratePDFOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = 'Generar PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
+        $this->data['pdfPath'] = asset('storage/' . $view_form->file_storage);
 
         // Eliminar las respuestas anteriores
         session()->forget(['edit_mode_fields']);

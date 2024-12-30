@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\FilePDF;
-use App\Models\GeneratePDF;
 use App\Models\ViewForm;
+use App\Models\GeneratePDF;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ViewFormController extends Controller
 {
@@ -43,11 +45,56 @@ class ViewFormController extends Controller
             ], 404);
         }
 
+
+        // * Obtener datos
+        // !! :NOTA:
+        // No es necesario serializarlo (o convertirlo en JSON)
+        // por que fue enviado const formData = new FormData(); y JSON.stringify(jsonData.fields)
+        $fields = request('fields');
+        $ip = request()->ip();
+
+        // * Crear carpeta para almacenar archivos PDF
+        $pathDir = 'pdf-generates/IP' . Str::slug( $ip) . '-FILE' . $file_pdf->id . '/';
+        Storage::makeDirectory($pathDir);
+
+        // * Generar un nombre del archivo para descarga
+        $downloadName = Str::slug($file_pdf->file_name)." - ".time().".pdf";
+
+        // * Generar un nombre del archivo para almacenarlo en el servidor
+        $filename = $file_pdf->id.'-'.Str::slug($file_pdf->file_name).'-'.time().'.'.'pdf';
+
+        // * Recuperar el archivo de la consulta y salvar el archivo en el servidor
+        $file = request()->file('pdfFile');
+        $path = $file->storeAs($pathDir, $filename);
+
+        $conditions = [
+            'file_pdf_id' => $file_pdf->id,
+            'ip' => $ip,
+            'generated' => true,
+        ];
+
+        $generatePDF = GeneratePDF::updateOrCreate(
+            $conditions,
+            [
+                'file_pdf_id' => $file_pdf->id,
+                'name' => $file_pdf->name,
+                'description' => $file_pdf->description,
+                'path' => $path,
+                'download' => $downloadName,
+                'fields' => $fields,
+                'generated' => true,
+            ]
+        );
+
         return response()->json([
             'title' => 'Generar PDF',
-            'message' => 'Archivo generado exitosamente',
+            'message' => 'Formulario guardado como borrador',
             'success' => true,
-            'data' => $file_pdf,
+            'filePath' => $path,
+            'downloadName' => $downloadName,
+            'data' => [
+                'generate_pdf' => $generatePDF->id,
+            ],
         ], 200);
     }
 
@@ -63,6 +110,11 @@ class ViewFormController extends Controller
             ], 404);
         }
 
+
+        // * Obtener datos
+        // !! :NOTA:
+        // Es necesario serializarlo (o convertirlo en JSON)
+        // por que fue enviado directamente desde `body: JSON.stringify(jsonData)`
         $fields = json_encode(request('fields'));
         $ip = request()->ip();
 
