@@ -48,7 +48,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                 <div id="datatable_search_stack" class="mt-sm-0 mt-2 d-print-none"></div>
             </div>
         </div>
-        <form onsubmit="fnOnSubmit(event, this)">
+        <form id="unique_views_forms" onsubmit="fnOnSubmit(event, this)">
         <div class="card my-2">
             <div class="card-body">
 
@@ -62,13 +62,13 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
                                     <label class="form-label txt-label-css">Nombre completo<span class="field-req-css"></span></label>
-                                    <input type="text" name="txt_name" class="form-control" value="{{ ('txt_name') }}" required/>
+                                    <input type="text" name="txt_name" class="form-control" value="{{ editmode_e('txt_name') }}" required/>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
                                     <label class="form-label txt-label-css">Fecha de elaboración<span class="field-req-css"></span></label>
-                                    <input type="date" name="txt_date" class="form-control" value="{{ ('2024-12-12') }}" required>
+                                    <input type="date" name="txt_date" class="form-control" value="{{ editmode_e('txt_date', '2024-12-12') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -76,13 +76,13 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
                                     <label class="form-label txt-label-css">Correo electrónico<span class="field-req-css"></span></label>
-                                    <input type="email" name="txt_email" class="form-control" value="{{ ('txt_email') }}" required/>
+                                    <input type="email" name="txt_email" class="form-control" value="{{ editmode_e('txt_email') }}" required/>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
                                     <label class="form-label txt-label-css">Empresa / GitHub / GitLab / etc.<span class="field-req-css"></span></label>
-                                    <input type="text" name="txt_company" class="form-control" value="{{ ('txt_company') }}" required/>
+                                    <input type="text" name="txt_company" class="form-control" value="{{ editmode_e('txt_company') }}" required/>
                                 </div>
                             </div>
                         </div>
@@ -156,11 +156,22 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
             `document.querySelectorAll` to find all input fields with names that start with the
             selector string, as well as textarea fields with names that start with the selector
             string. */
-            const inputs = document.querySelectorAll(changeInputs);
-            inputs.forEach((input, index) => {
-                const value = input.type === 'checkbox' ? input.checked ? 'X' : '' : input.value;
-                const name = input.name;
-                jsonData.fields[`${name}`] = value;
+
+            // Iterar sobre los elementos del formulario
+            const form = document.getElementById('unique_views_forms');
+            Array.from(form.elements).forEach((element) => {
+                if (!element.name) return; // Ignorar elementos sin atributo `name`
+
+                // Determinar el valor del campo dependiendo de su tipo
+                if (element.type === 'checkbox') {
+                jsonData.fields[element.name] = element.checked;
+                } else if (element.type === 'radio') {
+                if (element.checked) {
+                    jsonData.fields[element.name] = element.value;
+                }
+                } else {
+                jsonData.fields[element.name] = element.value;
+                }
             });
         }
 
@@ -171,7 +182,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
             timer = setTimeout(async function() {
                 // Send the POST request to the server
                 var route = '{{  route("api.v1.view-form.save_draft", ["id" => "~id~"]) }}';
-                route = route.replace('~id~', parseInt("{{ $entry_id }}"));
+                route = route.replace('~id~', parseInt("{{ $view_form_id }}"));
 
                 await fetch(route, {
                         method: 'POST',

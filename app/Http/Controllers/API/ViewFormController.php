@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\FilePDF;
 use App\Models\GeneratePDF;
 use App\Models\ViewForm;
 use Illuminate\Http\Request;
@@ -12,13 +13,13 @@ class ViewFormController extends Controller
 
     public function generate_pdf(Request $request, int $id)
     {
-        $view_form = ViewForm::find($id);
-        if($view_form == null) {
+        $file_pdf = FilePDF::find($id);
+        if($file_pdf == null) {
             return response()->json([
             'title' => 'Generar PDF',
             'message' => 'Formulario no encontrado',
             'success' => false,
-            'data' => $view_form,
+            'data' => $file_pdf,
         ], 404);
         }
 
@@ -26,19 +27,19 @@ class ViewFormController extends Controller
             'title' => 'Generar PDF',
             'message' => 'Generando archivo PDF ',
             'success' => true,
-            'data' => $view_form,
+            'data' => $file_pdf,
         ], 200);
     }
 
     public function save_pdf(Request $request, int $id)
     {
-        $view_form = ViewForm::find($id);
-        if($view_form == null) {
+        $file_pdf = FilePDF::find($id);
+        if($file_pdf == null) {
             return response()->json([
                 'title' => 'Generar PDF',
                 'message' => 'Formulario no encontrado',
                 'success' => false,
-                'data' => $view_form,
+                'data' => $file_pdf,
             ], 404);
         }
 
@@ -46,19 +47,19 @@ class ViewFormController extends Controller
             'title' => 'Generar PDF',
             'message' => 'Archivo generado exitosamente',
             'success' => true,
-            'data' => $view_form,
+            'data' => $file_pdf,
         ], 200);
     }
 
     public function save_draft(Request $request, int $id)
     {
-        $view_form = ViewForm::find($id);
-        if($view_form == null) {
+        $file_pdf = FilePDF::find($id);
+        if($file_pdf == null) {
             return response()->json([
                 'title' => 'Generar PDF',
                 'message' => 'Formulario no encontrado',
                 'success' => false,
-                'data' => $view_form,
+                'data' => $file_pdf,
             ], 404);
         }
 
@@ -66,7 +67,7 @@ class ViewFormController extends Controller
         $ip = request()->ip();
 
         $conditions = [
-            'file_pdf_id' => $view_form->file_pdf->id,
+            'file_pdf_id' => $file_pdf->id,
             'ip' => $ip,
             'generated' => false,
         ];
@@ -74,9 +75,9 @@ class ViewFormController extends Controller
         $generatePDF = GeneratePDF::updateOrCreate(
             $conditions,
             [
-                'file_pdf_id' => $view_form->file_pdf->id,
-                'name' => $view_form->name,
-                'description' => $view_form->description,
+                'file_pdf_id' => $file_pdf->id,
+                'name' => $file_pdf->name,
+                'description' => $file_pdf->description,
                 'fields' => $fields,
                 'generated' => false,
             ]
