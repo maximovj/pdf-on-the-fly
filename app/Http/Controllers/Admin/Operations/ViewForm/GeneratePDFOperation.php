@@ -79,8 +79,14 @@ trait GeneratePDFOperation
         // Eliminar las respuestas anteriores
         session()->forget(['edit_mode_fields']);
 
-        // load the view
-        //return view("crud::operations.generatepdf", $this->data);
-        return view("pdfonthefly.views_forms.views_forms", $this->data);
+        // Verificar si existe el formulario
+        $viewName = "pdfonthefly.views_forms.forms.".$view_form->id;
+        if (view()->exists($viewName)) {
+            return view('pdfonthefly.views_forms.views_forms', $this->data);
+        } else {
+            // Si no existe el formulario redireccionar hacia atrás
+            Alert::error('Lo siento formulario no encontrado')->flash();
+            return redirect()->back();
+        }
     }
 }
