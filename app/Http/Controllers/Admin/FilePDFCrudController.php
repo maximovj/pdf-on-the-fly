@@ -32,6 +32,31 @@ class FilePDFCrudController extends CrudController
     }
 
     /**
+     * Define what happens when the show operation is loaded.
+     *
+     * @see  https://backpackforlaravel.com/docs/4.1/crud-operation-show#how-to-use
+     * @return void
+     */
+    protected function setupShowOperation()
+    {
+        // by default the Show operation will try to show all columns in the db table,
+        // but we can easily take over, and have full control of what columns are shown,
+
+        // by changing this config for the Show operation
+
+        $this->crud->set('show.setFromDb', false);
+
+        $this->addColumns();
+
+        $this->crud->addColumn([
+            'name' => 'file_storage',
+            'type' => 'text',
+            'label' => 'Ruta del archivo',
+        ]);
+
+    }
+
+    /**
      * Define what happens when the List operation is loaded.
      *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
@@ -57,6 +82,12 @@ class FilePDFCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => 'description',
+            'type' => 'text',
+            'label' => 'Descripción',
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'file_name',
             'type' => 'text',
             'label' => 'Nombre del archivo',
@@ -66,12 +97,6 @@ class FilePDFCrudController extends CrudController
             'name' => 'file_extension',
             'type' => 'text',
             'label' => 'Extensión del archivo',
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'file_storage',
-            'type' => 'text',
-            'label' => 'Ruta del archivo',
         ]);
 
     }
@@ -107,10 +132,18 @@ class FilePDFCrudController extends CrudController
 
     protected function addFields()
     {
+        $entry = $this->crud->getCurrentEntry();
+
         $this->crud->addField([
             'name' => 'name',
             'type' => 'text',
             'label' => 'Nombre',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => 'Descripción',
         ]);
 
         $this->crud->addField([
@@ -125,10 +158,14 @@ class FilePDFCrudController extends CrudController
             'label' => 'Extensión del archivo',
         ]);
 
-        $this->crud->addField([
+        CRUD::addField([
             'name' => 'file_storage',
-            'type' => 'text',
-            'label' => 'Ruta del archivo',
+            'type' => 'upload',
+            'disk' => 'public',
+            'upload' => true,
+            'value' => $entry ? $entry->file_storage : '',
+            'label' => 'Cargar archivo',
+            'hint' => 'Los archivos admitidos son: PDF.'
         ]);
 
     }
