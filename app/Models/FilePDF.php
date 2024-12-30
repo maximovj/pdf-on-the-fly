@@ -92,7 +92,7 @@ class FilePDF extends Model
                 Storage::makeDirectory($url_storage);
 
                 // Generar el nombre del archivo
-                $filename = $this->attributes['id'].'-'.Str::slug($this->attributes['file_name']).'-'.time().'.'. $extension_file;
+                $filename = ($this->attributes['id'] ?? time()).'-'.Str::slug($this->attributes['file_name']).'-'.time().'.'. $extension_file;
 
                 // Salvar la ruta del archivo en el campo `file_storage` de la tabla
                 $this->attributes[$field_file] = $url_storage.'/'.$filename;
