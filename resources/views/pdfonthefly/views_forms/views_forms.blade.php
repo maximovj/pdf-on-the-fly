@@ -89,7 +89,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                     </div>
                 </div>
 
-                @include('pdfonthefly.views_forms.forms.'.$entry_id)
+                @include('pdfonthefly.views_forms.forms.'.$view_form_id)
             </div>
         </div>
         <div>

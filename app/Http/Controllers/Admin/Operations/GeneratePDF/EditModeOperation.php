@@ -1,44 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Operations\ViewForm;
+namespace App\Http\Controllers\Admin\Operations\GeneratePDF;
 
-use Illuminate\Support\Facades\Route;
 use Prologue\Alerts\Facades\Alert;
+use Illuminate\Support\Facades\Route;
 
-trait GeneratePDFOperation
+trait EditModeOperation
 {
     /**
      * Define which routes are needed for this operation.
-     * @see https://backpackforlaravel.com/docs/4.1/crud-operations#command-line-tool
-     * @see https://backpackforlaravel.com/docs/4.1/crud-operations#creating-a-new-operation-with-an-interface-1
      *
      * @param string $segment    Name of the current entity (singular). Used as first URL segment.
      * @param string $routeName  Prefix of the route name.
      * @param string $controller Name of the current CrudController.
      */
-    protected function setupGeneratePDFRoutes($segment, $routeName, $controller)
+    protected function setupEditModeRoutes($segment, $routeName, $controller)
     {
-        Route::get($segment.'/{id}/generatepdf', [
-            'as'        => $routeName.'.generatepdf',
-            'uses'      => $controller.'@generatepdf',
-            'operation' => 'view_form-generatepdf',
+        Route::get($segment.'/{id}/editmode', [
+            'as'        => $routeName.'.editmode',
+            'uses'      => $controller.'@editmode',
+            'operation' => 'generate_pdf-editmode',
         ]);
     }
 
     /**
      * Add the default settings, buttons, etc that this operation needs.
      */
-    protected function setupGeneratePDFDefaults()
+    protected function setupEditModeDefaults()
     {
-        $this->crud->allowAccess('view_form-generatepdf');
+        $this->crud->allowAccess('generate_pdf-editmode');
 
-        $this->crud->operation('view_form-generatepdf', function () {
+        $this->crud->operation('generate_pdf-editmode', function () {
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
         $this->crud->operation('list', function () {
-            // $this->crud->addButton('top', 'view_form-generatepdf', 'view', 'crud::buttons.generatepdf');
-            $this->crud->addButton('line', 'view_form-generatepdf', 'view', 'crud::buttons.views_forms.generatepdf', 'beginning');
+            // $this->crud->addButton('top', 'generate_pdf-editmode', 'view', 'crud::buttons.editmode');
+            $this->crud->addButton('line', 'generate_pdf-editmode', 'view', 'crud::buttons.generate_pdf.editmode', 'beginning');
         });
     }
 
@@ -47,9 +45,9 @@ trait GeneratePDFOperation
      *
      * @return Response
      */
-    public function generatepdf($id)
+    public function editmode($id)
     {
-        $this->crud->hasAccessOrFail('view_form-generatepdf');
+        $this->crud->hasAccessOrFail('generate_pdf-editmode');
 
         $entry = $this->crud->getEntry($id) ?? $this->crud->getCurrentEntry();
         if($entry == null)
@@ -72,11 +70,11 @@ trait GeneratePDFOperation
         $this->data['ip'] = request()->ip();
         $this->data['origin'] = config('app.url');
         $this->data['crud'] = $this->crud;
-        $this->data['title'] = 'Generar PDF';
+        $this->data['title'] = 'Modo Edición PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
 
-        // Eliminar las respuestas anteriores
-        session()->forget(['edit_mode_fields']);
+        // Recuperar las respuestas anteriores
+        session(['edit_mode_fields' => json_decode($entry->fields, true)]);
 
         // load the view
         //return view("crud::operations.generatepdf", $this->data);
