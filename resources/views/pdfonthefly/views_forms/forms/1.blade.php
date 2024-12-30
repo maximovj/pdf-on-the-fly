@@ -1,38 +1,3 @@
-<div class="card">
-    <div class="card-header card-header-css">
-        <h1 class="txt-h1-css">Lorem ipsum dolor sit.</h1>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-8 mb-2">
-                <div data-mdb-input-init class="form-outline">
-                    <label class="form-label txt-label-css">Lorem ipsum dolor sit amet consectetur adipisicing.<span class="field-req-css"></span></label>
-                    <input type="text" name="txt0" class="form-control" value="{{ ('txt0') }}" required/>
-                </div>
-            </div>
-            <div class="col-4 mb-2">
-                <div data-mdb-input-init class="form-outline">
-                    <label class="form-label txt-label-css">Lorem ipsum dolor sit amet.<span class="field-req-css"></span></label>
-                    <input type="text" name="txt1" class="form-control" value="{{ ('txt1') }}" required/>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-8 mb-2">
-                <div data-mdb-input-init class="form-outline">
-                    <label class="form-label txt-label-css">Lorem ipsum dolor sit amet consectetur adipisicing..<span class="field-req-css"></span></label>
-                    <input type="text" name="txt2" class="form-control" value="{{ ('txt2') }}" required/>
-                </div>
-            </div>
-            <div class="col-4 mb-2">
-                <div data-mdb-input-init class="form-outline">
-                    <label class="form-label txt-label-css">Lorem ipsum dolor sit amet.<span class="field-req-css"></span></label>
-                    <input type="text" name="txt3" class="form-control" value="{{ ('txt3') }}" required/>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <table class="bg-white table table-striped table-hover table-responsive-css rounded shadow-xs wrap border-xs my-4" cellspacing="0">
     <thead class="thead-dark">

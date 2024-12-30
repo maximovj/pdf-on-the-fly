@@ -51,6 +51,44 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
         <form onsubmit="fnOnSubmit(event, this)">
         <div class="card my-2">
             <div class="card-body">
+
+                {{-- Datos personales --}}
+                <div class="card">
+                    <div class="card-header card-header-css">
+                        <h1 class="txt-h1-css">Datos personales</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label txt-label-css">Nombre(s)<span class="field-req-css"></span></label>
+                                    <input type="text" name="txt_name" class="form-control" value="{{ ('txt_name') }}" required/>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label txt-label-css">Correo electrónico<span class="field-req-css"></span></label>
+                                    <input type="email" name="txt_email" class="form-control" value="{{ ('txt_email') }}" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label txt-label-css">Apellido(s)<span class="field-req-css"></span></label>
+                                    <input type="text" name="txt_last_name" class="form-control" value="{{ ('txt_last_name') }}" required/>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label txt-label-css">Empresa / GitHub / GitLab / etc.<span class="field-req-css"></span></label>
+                                    <input type="text" name="txt_company" class="form-control" value="{{ ('txt_company') }}" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 @include('pdfonthefly.views_forms.forms.'.$entry_id)
             </div>
         </div>
