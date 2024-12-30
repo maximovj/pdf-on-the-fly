@@ -227,7 +227,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                             const input_form_field = form.getTextField(keys);
                             input_form_field.defaultUpdateAppearances(helvetica);
                             input_form_field.setFontSize(fontSize);
-                            input_form_field.setText(jsonData.fields[keys] === true ? 'X' : jsonData.fields[keys]);
+                            input_form_field.setText(jsonData.fields[keys] === true ? '  X' : jsonData.fields[keys]);
                         } catch (error) {}
                     });
 
