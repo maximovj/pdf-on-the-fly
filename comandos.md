@@ -10,6 +10,9 @@ $ php artisan backpack:publish-middleware
 # Publicar vistas
 $ php artisan backpack:publish base/inc/menu
 
+# Crear una BackPack Operación 
+$  php artisan backpack:crud-operation ViewForm/GeneratePDF
+
 # Eliminar cache y recargar configuración
 $ php artisan optimize
 
