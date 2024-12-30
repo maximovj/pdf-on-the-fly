@@ -72,6 +72,12 @@ class ViewFormCrudController extends CrudController
     {
 
         $this->crud->addColumn([
+            'name' => 'file_pdf.id',
+            'type' => 'text',
+            'label' => 'ID del archivo',
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'file_pdf.name',
             'type' => 'text',
             'label' => 'Nombre del archivo',
@@ -81,6 +87,12 @@ class ViewFormCrudController extends CrudController
             'name' => 'file_pdf.description',
             'type' => 'text',
             'label' => 'Descripción del archivo',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'file_pdf.file_extension',
+            'type' => 'text',
+            'label' => 'Extensión del archivo',
         ]);
 
         $this->crud->addColumn([
@@ -127,6 +139,24 @@ class ViewFormCrudController extends CrudController
 
     protected function addFields()
     {
+        $this->crud->addField([
+            'name' => 'file_pdf_id',
+            'type' => 'select2',
+            'label' => 'Archivo PDF',
+            'allows_null' => false,
+
+            // optional
+            'entity'    => 'file_pdf', // the method that defines the relationship in your Model
+            'model'     => "App\Models\FilePDF", // foreign key model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            //'default'   => 2, // set the default value of the select2
+
+            // also optional
+            'options'   => (function ($query) {
+                return $query->orderBy('name', 'ASC')->whereNotNull('file_storage')->get();
+            }), // force the related options to be a custom query, instead of all(); you can use this to filter the results show in the select
+        ]);
+
         $this->crud->addField([
             'name' => 'name',
             'type' => 'text',
