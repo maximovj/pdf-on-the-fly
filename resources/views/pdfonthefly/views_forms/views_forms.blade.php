@@ -61,22 +61,22 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label txt-label-css">Nombre(s)<span class="field-req-css"></span></label>
+                                    <label class="form-label txt-label-css">Nombre completo<span class="field-req-css"></span></label>
                                     <input type="text" name="txt_name" class="form-control" value="{{ ('txt_name') }}" required/>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label txt-label-css">Correo electrónico<span class="field-req-css"></span></label>
-                                    <input type="email" name="txt_email" class="form-control" value="{{ ('txt_email') }}" required/>
+                                    <label class="form-label txt-label-css">Fecha de elaboración<span class="field-req-css"></span></label>
+                                    <input type="date" name="txt_date" class="form-control" value="{{ ('2024-12-12') }}" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label txt-label-css">Apellido(s)<span class="field-req-css"></span></label>
-                                    <input type="text" name="txt_last_name" class="form-control" value="{{ ('txt_last_name') }}" required/>
+                                    <label class="form-label txt-label-css">Correo electrónico<span class="field-req-css"></span></label>
+                                    <input type="email" name="txt_email" class="form-control" value="{{ ('txt_email') }}" required/>
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
