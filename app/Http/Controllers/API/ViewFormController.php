@@ -65,7 +65,8 @@ class ViewFormController extends Controller
 
         // * Recuperar el archivo de la consulta y salvar el archivo en el servidor
         $file = request()->file('pdfFile');
-        $path = $file->storeAs($pathDir, $filename);
+        //$path = $file->storeAs($pathDir, $filename);
+        $path = Storage::disk('public')->putFileAs($pathDir, $file, $filename);
 
         $conditions = [
             'file_pdf_id' => $file_pdf->id,
