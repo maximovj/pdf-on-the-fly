@@ -62,14 +62,6 @@ class GeneratePDFCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        // Eliminar el contenido o vista de la operación `generate_pdf-editmode` y `show`
-        // Se usa la vista `void` para eliminar el contenido de una operación
-        $this->crud->addButtonFromView('line', 'generate_pdf-editmode', 'void', 'end');
-        $this->crud->addButtonFromView('line', 'delete', 'void', 'end');
-        $this->crud->addButtonFromView('line', 'show', 'void', 'end');
-
-        // Se agrega una operación usando una vista blade
-        $this->crud->addButtonFromView('line', 'actions', 'generate_pdf.actions', 'beginning');
 
         $this->addColumns();
 
@@ -82,6 +74,15 @@ class GeneratePDFCrudController extends CrudController
 
     protected function addColumns()
     {
+        // Eliminar el contenido o vista de la operación `generate_pdf-editmode` y `show`
+        // Se usa la vista `void` para eliminar el contenido de una operación
+        $this->crud->addButtonFromView('line', 'generate_pdf-editmode', 'void', 'end');
+        $this->crud->addButtonFromView('line', 'delete', 'void', 'end');
+        $this->crud->addButtonFromView('line', 'show', 'void', 'end');
+
+        // Se agrega una operación usando una vista blade
+        $this->crud->addButtonFromView('line', 'actions', 'generate_pdf.actions', 'beginning');
+
         $this->crud->column('id');
 
         $this->crud->addColumn([
