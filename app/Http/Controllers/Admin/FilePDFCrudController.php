@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\FilePDF;
+use App\Models\GeneratePDF;
 use App\Http\Requests\FilePDFRequest;
 use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -120,6 +121,22 @@ class FilePDFCrudController extends CrudController
             'name' => 'file_extension',
             'type' => 'text',
             'label' => 'Extensión del archivo',
+        ]);
+
+        $this->crud->addColumn([
+            'name'     => 'custom-generated-count',
+            'label'    => 'Generados',
+            'type'     => 'closure',
+            'function' => function($entry) {
+                $count_file_generates = GeneratePDF::query()
+                ->where('ip', '=', request()->ip())
+                ->where('file_pdf_id', '=', $entry->id)
+                ->where('generated', '=', 1)
+                ->count();
+                return '<span class="badge badge-success" >'.($count_file_generates ?? 0).'</span> | '.
+                        '<a href="'.( route('generate-pdf.index', ['filter_file_pdf_id' => $entry->id, 'generated' => 'true']) )
+                        .'"><i class="la la-link"></i>&nbsp;Ver</a>';
+            }
         ]);
 
     }

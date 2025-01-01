@@ -54,6 +54,13 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->set('show.setFromDb', false);
         $this->addColumns();
 
+        $this->crud->addColumn([
+            'name'     => 'fields',
+            'label'    => 'Respuestas (JSON)',
+            'type'     => 'json',
+            'escaped' => false //optional, if the "value" should be escaped when displayed in the page.
+        ]);
+
     }
 
     /**
@@ -135,6 +142,7 @@ class GeneratePDFCrudController extends CrudController
             'name' => 'updated_at',
             'type' => 'date',
             'label' => 'Última actualización',
+            'format' => 'ddd d \d\e MMM \d\e Y',
         ]);
 
     }
@@ -197,6 +205,25 @@ class GeneratePDFCrudController extends CrudController
             });
         },
         $fallbackLogic = false);
+
+        // Cantidad de versiones
+        $this->crud->addFilter([
+            'name'       => 'number_version',
+            'type'       => 'range',
+            'label'      => 'Versiones',
+            'label_from' => 'min value',
+            'label_to'   => 'max value'
+          ],
+          false,
+          function($value) { // if the filter is active
+              $range = json_decode($value);
+              if ($range->from) {
+                  $this->crud->addClause('where', 'count', '>=', (float) $range->from);
+              }
+              if ($range->to) {
+                  $this->crud->addClause('where', 'count', '<=', (float) $range->to);
+              }
+          });
 
         // Filtro paa filtrar borradores
         $this->crud->addFilter([
