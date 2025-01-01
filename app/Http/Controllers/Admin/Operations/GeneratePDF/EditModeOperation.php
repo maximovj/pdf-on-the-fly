@@ -56,8 +56,9 @@ trait EditModeOperation
             return redirect()->back();
         }
 
-        $view_form = $entry->file_pdf ?? null;
-        if($view_form == null)
+        $view_form = $entry->view_form ?? null;
+        $file_pdf = $entry->file_pdf ?? null;
+        if($file_pdf == null || $view_form == null)
         {
             Alert::error('Lo siento, el elemento no fue encontrado')->flash();
             return redirect()->back();
@@ -67,12 +68,13 @@ trait EditModeOperation
         $this->data['entry'] = $entry;
         $this->data['entry_id'] = $entry->id;
         $this->data['view_form_id'] = $view_form->id;
+        $this->data['file_pdf_id'] = $file_pdf->id;
         $this->data['ip'] = request()->ip();
         $this->data['origin'] = config('app.url');
         $this->data['crud'] = $this->crud;
         $this->data['title'] = 'Modo Edición PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
-        $this->data['pdfPath'] = asset('storage/' . $view_form->file_storage);
+        $this->data['pdfPath'] = asset('storage/' . $file_pdf->file_storage);
 
         // Recuperar las respuestas anteriores
         session(['edit_mode_fields' => json_decode($entry->fields, true)]);

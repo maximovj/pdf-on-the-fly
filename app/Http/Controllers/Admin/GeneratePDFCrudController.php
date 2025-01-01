@@ -85,15 +85,21 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->column('id');
 
         $this->crud->addColumn([
-            'name' => 'file_pdf.name',
+            'name' => 'view_form.name',
+            'type' => 'text',
+            'label' => 'Nombre del formulario',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'file_pdf.file_name',
             'type' => 'text',
             'label' => 'Nombre del archivo',
         ]);
 
         $this->crud->addColumn([
-            'name' => 'view_form.name',
+            'name' => 'file_pdf.file_extension',
             'type' => 'text',
-            'label' => 'Nombre del formulario',
+            'label' => 'Extensión del archivo',
         ]);
 
         $this->crud->addColumn([
@@ -116,7 +122,7 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'count',
             'type' => 'number',
-            'label' => 'Versiones',
+            'label' => 'Versión',
         ]);
 
     }

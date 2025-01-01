@@ -58,8 +58,9 @@ trait GeneratePDFOperation
             return redirect()->back();
         }
 
-        $view_form = $entry->file_pdf ?? null;
-        if($view_form == null)
+        $view_form = $entry ?? null;
+        $file_pdf = $entry->file_pdf ?? null;
+        if($file_pdf == null || $view_form == null)
         {
             Alert::error('Lo siento, el elemento no fue encontrado')->flash();
             return redirect()->back();
@@ -69,18 +70,19 @@ trait GeneratePDFOperation
         $this->data['entry'] = $entry;
         $this->data['entry_id'] = $entry->id;
         $this->data['view_form_id'] = $view_form->id;
+        $this->data['file_pdf_id'] = $file_pdf->id;
         $this->data['ip'] = request()->ip();
         $this->data['origin'] = config('app.url');
         $this->data['crud'] = $this->crud;
         $this->data['title'] = 'Generar PDF';
         $this->data['subtitle'] = 'Detalles de <span class="badge badge-secondary">'.($entry->file_pdf->name??'No. #'.$entry->id).'</span>';
-        $this->data['pdfPath'] = asset('storage/' . $view_form->file_storage);
+        $this->data['pdfPath'] = asset('storage/' . $file_pdf->file_storage);
 
         // Eliminar las respuestas anteriores
         session()->forget(['edit_mode_fields']);
 
         // Verificar si existe el formulario
-        $viewName = "pdfonthefly.views_forms.forms.".$view_form->id;
+        $viewName = "pdfonthefly.views_forms.forms.".$file_pdf->id;
         if (view()->exists($viewName)) {
             return view('pdfonthefly.views_forms.views_forms', $this->data);
         } else {

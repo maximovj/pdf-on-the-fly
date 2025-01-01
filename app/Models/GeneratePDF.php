@@ -21,6 +21,7 @@ class GeneratePDF extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'file_pdf_id',
+        'view_form_id',
         'ip',
         'name',
         'description',

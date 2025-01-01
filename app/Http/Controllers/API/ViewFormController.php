@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\FilePDF;
 use App\Models\ViewForm;
 use App\Models\GeneratePDF;
 use Illuminate\Support\Str;
@@ -15,13 +14,13 @@ class ViewFormController extends Controller
 
     public function generate_pdf(Request $request, int $id)
     {
-        $file_pdf = FilePDF::find($id);
-        if($file_pdf == null) {
+        $view_form = ViewForm::find($id);
+        if($view_form == null) {
             return response()->json([
             'title' => 'Generar PDF',
             'message' => 'Formulario no encontrado',
             'success' => false,
-            'data' => $file_pdf,
+            'data' => $view_form,
         ], 404);
         }
 
@@ -29,7 +28,7 @@ class ViewFormController extends Controller
             'title' => 'Generar PDF',
             'message' => 'Generando archivo PDF ',
             'success' => true,
-            'data' => $file_pdf,
+            'data' => $view_form,
         ], 200);
     }
 
@@ -37,13 +36,13 @@ class ViewFormController extends Controller
 
     public function save_draft(Request $request, int $id)
     {
-        $file_pdf = FilePDF::find($id);
-        if($file_pdf == null) {
+        $view_form = ViewForm::find($id);
+        if($view_form == null || !isset($view_form->file_pdf)) {
             return response()->json([
                 'title' => 'Generar PDF',
                 'message' => 'Formulario no encontrado',
                 'success' => false,
-                'data' => $file_pdf,
+                'data' => $view_form,
             ], 404);
         }
 
@@ -53,8 +52,10 @@ class ViewFormController extends Controller
         // por que fue enviado directamente desde `body: JSON.stringify(jsonData)`
         $fields = json_encode(request('fields'));
         $ip = request()->ip();
+        $file_pdf = $view_form->file_pdf;
 
         $conditions = [
+            'view_form_id' => $view_form->id,
             'file_pdf_id' => $file_pdf->id,
             'ip' => $ip,
             'generated' => false,
@@ -63,6 +64,7 @@ class ViewFormController extends Controller
         $generatePDF = GeneratePDF::updateOrCreate(
             $conditions,
             [
+                'view_form_id' => $view_form->id,
                 'file_pdf_id' => $file_pdf->id,
                 'fields' => $fields,
                 'generated' => false,
@@ -84,19 +86,20 @@ class ViewFormController extends Controller
             'success' => true,
             'data' => [
                 'generate_pdf' => $generatePDF->id,
+                'conditions' => $conditions
             ],
         ], 200);
     }
 
     public function save_pdf(Request $request, int $id)
     {
-        $file_pdf = FilePDF::find($id);
-        if($file_pdf == null) {
+        $view_form = ViewForm::find($id);
+        if($view_form == null || !isset($view_form->file_pdf)) {
             return response()->json([
                 'title' => 'Generar PDF',
                 'message' => 'Formulario no encontrado',
                 'success' => false,
-                'data' => $file_pdf,
+                'data' => $view_form,
             ], 404);
         }
 
@@ -106,6 +109,7 @@ class ViewFormController extends Controller
         // por que fue enviado const formData = new FormData(); y JSON.stringify(jsonData.fields)
         $fields = request('fields');
         $ip = request()->ip();
+        $file_pdf = $view_form->file_pdf;
 
         // * Crear carpeta para almacenar archivos PDF
         $pathDir = 'pdf-generates/IP' . Str::slug( $ip) . '-FILE' . $file_pdf->id . '/';
@@ -123,6 +127,7 @@ class ViewFormController extends Controller
         $path = Storage::disk('public')->putFileAs($pathDir, $file, $filename);
 
         $conditions = [
+            'view_form_id' => $view_form->id,
             'file_pdf_id' => $file_pdf->id,
             'ip' => $ip,
             //'generated' => false,
@@ -132,6 +137,7 @@ class ViewFormController extends Controller
         $generatePDF = GeneratePDF::updateOrCreate(
             $conditions,
             [
+                'view_form_id' => $view_form->id,
                 'file_pdf_id' => $file_pdf->id,
                 'path' => $path,
                 'download' => $downloadName,
