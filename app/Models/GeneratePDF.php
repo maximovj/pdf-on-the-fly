@@ -52,6 +52,11 @@ class GeneratePDF extends Model
         return $this->belongsTo(FilePDF::class, 'file_pdf_id', 'id');
     }
 
+    public function view_form()
+    {
+        return $this->belongsTo(ViewForm::class, 'view_form_id', 'id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

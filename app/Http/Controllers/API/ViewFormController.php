@@ -33,7 +33,9 @@ class ViewFormController extends Controller
         ], 200);
     }
 
-    public function save_pdf(Request $request, int $id)
+
+
+    public function save_draft(Request $request, int $id)
     {
         $file_pdf = FilePDF::find($id);
         if($file_pdf == null) {
@@ -45,6 +47,58 @@ class ViewFormController extends Controller
             ], 404);
         }
 
+        // * Obtener datos
+        // !! :NOTA:
+        // Es necesario serializarlo (o convertirlo en JSON)
+        // por que fue enviado directamente desde `body: JSON.stringify(jsonData)`
+        $fields = json_encode(request('fields'));
+        $ip = request()->ip();
+
+        $conditions = [
+            'file_pdf_id' => $file_pdf->id,
+            'ip' => $ip,
+            'generated' => false,
+        ];
+
+        $generatePDF = GeneratePDF::updateOrCreate(
+            $conditions,
+            [
+                'file_pdf_id' => $file_pdf->id,
+                'fields' => $fields,
+                'generated' => false,
+            ]
+        );
+
+         // Crear un hash
+         $version = $generatePDF->count + 1;
+         $hash = $id.'-'.time().'-'.$version;
+
+         // Actualizar contador de versiones y hash
+         $generatePDF->count = $version;
+         $generatePDF->hash = $hash;
+         $generatePDF->save();
+
+        return response()->json([
+            'title' => 'Generar PDF',
+            'message' => 'Formulario guardado como borrador',
+            'success' => true,
+            'data' => [
+                'generate_pdf' => $generatePDF->id,
+            ],
+        ], 200);
+    }
+
+    public function save_pdf(Request $request, int $id)
+    {
+        $file_pdf = FilePDF::find($id);
+        if($file_pdf == null) {
+            return response()->json([
+                'title' => 'Generar PDF',
+                'message' => 'Formulario no encontrado',
+                'success' => false,
+                'data' => $file_pdf,
+            ], 404);
+        }
 
         // * Obtener datos
         // !! :NOTA:
@@ -71,21 +125,29 @@ class ViewFormController extends Controller
         $conditions = [
             'file_pdf_id' => $file_pdf->id,
             'ip' => $ip,
-            'generated' => true,
+            //'generated' => false,
+            'fields' => $fields,
         ];
 
         $generatePDF = GeneratePDF::updateOrCreate(
             $conditions,
             [
                 'file_pdf_id' => $file_pdf->id,
-                'name' => $file_pdf->name,
-                'description' => $file_pdf->description,
                 'path' => $path,
                 'download' => $downloadName,
                 'fields' => $fields,
                 'generated' => true,
             ]
         );
+
+        // Crear un hash
+        $version = $generatePDF->count + 1;
+        $hash = $id.'-'.time().'-'.$version;
+
+        // Actualizar contador de versiones y hash
+        $generatePDF->count = $version;
+        $generatePDF->hash = $hash;
+        $generatePDF->save();
 
         return response()->json([
             'title' => 'Generar PDF',
@@ -94,53 +156,6 @@ class ViewFormController extends Controller
             'filePath' => $path,
             'urlFilePath' => asset( 'storage/'.$path),
             'downloadName' => $downloadName,
-            'data' => [
-                'generate_pdf' => $generatePDF->id,
-            ],
-        ], 200);
-    }
-
-    public function save_draft(Request $request, int $id)
-    {
-        $file_pdf = FilePDF::find($id);
-        if($file_pdf == null) {
-            return response()->json([
-                'title' => 'Generar PDF',
-                'message' => 'Formulario no encontrado',
-                'success' => false,
-                'data' => $file_pdf,
-            ], 404);
-        }
-
-
-        // * Obtener datos
-        // !! :NOTA:
-        // Es necesario serializarlo (o convertirlo en JSON)
-        // por que fue enviado directamente desde `body: JSON.stringify(jsonData)`
-        $fields = json_encode(request('fields'));
-        $ip = request()->ip();
-
-        $conditions = [
-            'file_pdf_id' => $file_pdf->id,
-            'ip' => $ip,
-            'generated' => false,
-        ];
-
-        $generatePDF = GeneratePDF::updateOrCreate(
-            $conditions,
-            [
-                'file_pdf_id' => $file_pdf->id,
-                'name' => $file_pdf->name,
-                'description' => $file_pdf->description,
-                'fields' => $fields,
-                'generated' => false,
-            ]
-        );
-
-        return response()->json([
-            'title' => 'Generar PDF',
-            'message' => 'Formulario guardado como borrador',
-            'success' => true,
             'data' => [
                 'generate_pdf' => $generatePDF->id,
             ],

@@ -68,6 +68,9 @@ function fnIframeFilePDFPreview(fileUrl) {
         showCloseButton: true,
         customClass: {
             popup: 'swal-wide'
+        },
+        willClose: () => {
+            window.location.reload(true);
         }
     });
 }

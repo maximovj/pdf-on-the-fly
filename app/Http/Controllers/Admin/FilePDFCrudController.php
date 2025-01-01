@@ -14,9 +14,9 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class FilePDFCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     /**
@@ -165,7 +165,10 @@ class FilePDFCrudController extends CrudController
             'upload' => true,
             'value' => $entry ? $entry->file_storage : '',
             'label' => 'Cargar archivo',
-            'hint' => 'Los archivos admitidos son: PDF.'
+            'attributes' => [
+                'accept' => '.pdf'
+            ],
+            'hint' => 'Los archivos admitidos son: PDF.',
         ]);
 
     }

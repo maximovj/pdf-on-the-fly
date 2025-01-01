@@ -23,13 +23,20 @@ class CreateGeneratesPdfTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
+            // Crear una llave foránea
+            $table->foreignId('view_form_id')
+            ->nullable()
+            ->constrained('views_forms','id')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
             $table->string('ip');
-            $table->string ('name')->nullable();
-            $table->text('description')->nullable();
             $table->boolean('generated')->default(false);
             $table->string('download')->nullable()->default('file_download.pdf');
             $table->string('path')->nullable();
             $table->json('fields')->nullable();
+            $table->string('hash')->nullable();
+            $table->integer('count')->nullable()->default(0);
             $table->timestamps();
         });
     }

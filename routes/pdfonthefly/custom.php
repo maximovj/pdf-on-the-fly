@@ -11,26 +11,33 @@ use Illuminate\Support\Facades\Route;
 * * * * * * * CUSTOM ROUTE
 ********/
 
-
-function route_home()
-{
-    Route::get('/', function () {
-        return redirect('/'.config('backpack.base.route_prefix', 'admin'));
-    });
+if (! function_exists('route_home')) {
+    function route_home()
+    {
+        Route::get('/', function () {
+            return redirect('/'.config('backpack.base.route_prefix', 'admin'));
+        });
+    }
 }
 
 /*******
 * ROUTES WITH A BACKPACK PREFIX
 ********/
-function prefix_backpack()
-{
 
+if (! function_exists('prefix_backpack')) {
+    function prefix_backpack()
+    {
+
+    }
 }
 
 /*******
 * ROUTES FROM ROOT (/)
 ********/
-function root_app()
-{
-    route_home();
+
+if (! function_exists('root_app')) {
+    function root_app()
+    {
+        route_home();
+    }
 }

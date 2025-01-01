@@ -29,7 +29,7 @@ class FilePDFRequest extends FormRequest
             'description' => 'required|string|min:3|max:120',
             'file_name' => 'required|string|min:3|max:120',
             'file_extension' => 'required|string|min:3|max:120',
-            'file_storage' => 'required|file|mimes:pdf|max:30720',
+            //'file_storage' => 'required|file|mimes:pdf|max:30720',
         ];
     }
 
