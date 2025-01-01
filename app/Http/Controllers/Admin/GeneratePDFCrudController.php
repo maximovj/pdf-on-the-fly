@@ -153,6 +153,12 @@ class GeneratePDFCrudController extends CrudController
     protected function addFields()
     {
         $this->crud->addField([
+            'name' => 'custom_html-fields-required',
+            'type' => 'fields-required',
+            'alert_type' => 'alert alert-primary',
+        ]);
+
+        $this->crud->addField([
             'name'  => 'ip',
             'label' => "Dirección IP",
             'default' => request()->ip(),

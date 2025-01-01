@@ -140,6 +140,12 @@ class ViewFormCrudController extends CrudController
     protected function addFields()
     {
         $this->crud->addField([
+            'name' => 'custom_html-fields-required',
+            'type' => 'fields-required',
+            'alert_type' => 'alert alert-primary',
+        ]);
+
+        $this->crud->addField([
             'name' => 'file_pdf_id',
             'type' => 'select2',
             'label' => 'Archivo PDF',

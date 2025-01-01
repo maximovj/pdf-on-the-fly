@@ -135,6 +135,12 @@ class FilePDFCrudController extends CrudController
         $entry = $this->crud->getCurrentEntry();
 
         $this->crud->addField([
+            'name' => 'custom_html-fields-required',
+            'type' => 'fields-required',
+            'alert_type' => 'alert alert-primary',
+        ]);
+
+        $this->crud->addField([
             'name' => 'name',
             'type' => 'text',
             'label' => 'Nombre',
