@@ -25,17 +25,33 @@ if (typeof previewPdfEntry != 'function') {
             new Noty({
                 type: "error",
                 title: "Petición",
-                text: `<strong>Este elemeno no está generado</strong><br>`
+                text: `<strong>Este elemento no está generado</strong><br>`
             }).show();
             return;
         }
 
         Swal.fire({
             html: `
-                <iframe src="${entry_path}"
-                        width="100%"
-                        height="460px"
-                        style="border: none;"></iframe>
+            <object
+                data= "${entry_path}"
+                type= "application/pdf"
+                width= "100%"
+                height= "400px"
+                title= "Visor de PDF integrado"
+            >
+                <iframe
+                    src= "${entry_path}"
+                    width= "100%"
+                    height= "100%"
+                    style= "border: none"
+                    title= "Visor de PDF integrado, respaldo de iframe"
+                >
+                    <p>
+                        Su navegador no admite archivos PDF. <a href= "${entry_path}" >
+                        Descargar el PDF</a>
+                    </p>
+                </iframe>
+            </object>
             `,
             width: '800px',
             allowOutsideClick: false,

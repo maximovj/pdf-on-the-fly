@@ -5,7 +5,7 @@
             data-entry_download="{{ $entry->download }}"
             data-button-type="generate_pdf-previewpdf"
             class="btn btn-sm btn-link">
-            <i class="la la-eye"></i> Vista Previa
+            <i class="la la-eye"></i> Ver PDF
         </a>
     @endif
 @endif
