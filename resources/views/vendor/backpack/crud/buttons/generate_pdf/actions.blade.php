@@ -3,15 +3,16 @@
         <span><i class="la la-plus-circle"></i> Acciones</span>
     </button>
     <div class="dropdown-menu z-index-500">
+        <a href="javascript:void(0)" onclick="pdfOnTheFlyEntry(this)"
+            data-route="{{ route('api.v1.view-form.save_pdf', ['id' => $entry->file_pdf_id]) }}"
+            data-entry="{{ $entry }}"
+            data-entry_file_storage="{{ asset('storage/' . $entry->file_pdf->file_storage) }}"
+            data-button-type="generate_pdf-pdfonthefly"
+            class="dropdown-item pointer">
+            <i class="la la-magic"></i> PDFOnTheFly
+        </a>
         @if ($entry->generated === 1)
-            <a href="javascript:void(0)" onclick="pdfOnTheFlyEntry(this)"
-                data-route="{{ route('api.v1.view-form.save_pdf', ['id' => $entry->file_pdf_id]) }}"
-                data-entry="{{ $entry }}"
-                data-entry_file_storage="{{ asset('storage/' . $entry->file_pdf->file_storage) }}"
-                data-button-type="generate_pdf-pdfonthefly"
-                class="dropdown-item pointer">
-                <i class="la la-magic"></i> PDFOnTheFly
-            </a>
+
             <a href="javascript:void(0)" onclick="previewPdfEntry(this)"
                 data-entry_path="{{ asset('storage/' . $entry->path) }}"
                 data-entry_download="{{ $entry->download }}"

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\FilePDF;
 use App\Http\Requests\FilePDFRequest;
+use Backpack\CRUD\app\Library\Widget;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -29,6 +31,8 @@ class FilePDFCrudController extends CrudController
         CRUD::setModel(\App\Models\FilePDF::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/file-pdf');
         CRUD::setEntityNameStrings('Archivos PDF', 'Archivos PDF');
+
+        Widget::name('card')->content('some other content');
     }
 
     /**
