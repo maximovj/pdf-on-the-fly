@@ -16,13 +16,13 @@ class GeneratePDFCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     //use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     //use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     use \App\Http\Controllers\Admin\Operations\GeneratePDF\EditModeOperation;
-    use \App\Http\Controllers\Admin\Operations\GeneratePDF\DownloadPDFOperation;
-    use \App\Http\Controllers\Admin\Operations\GeneratePDF\PreviewPDFOperation;
-    use \App\Http\Controllers\Admin\Operations\GeneratePDF\PdfOnTheFlyOperation;
+    //use \App\Http\Controllers\Admin\Operations\GeneratePDF\DownloadPDFOperation;
+    //use \App\Http\Controllers\Admin\Operations\GeneratePDF\PreviewPDFOperation;
+    //use \App\Http\Controllers\Admin\Operations\GeneratePDF\PdfOnTheFlyOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -57,12 +57,20 @@ class GeneratePDFCrudController extends CrudController
      * Define what happens when the List operation is loaded.
      *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
+     * @see  https://backpackforlaravel.com/docs/4.1/crud-buttons
      * @return void
      */
     protected function setupListOperation()
     {
-        $this->addColumns();
+        // Eliminar el contenido o vista de la operación `generate_pdf-editmode` y `show`
+        // Se usa la vista `void` para eliminar el contenido de una operación
+        $this->crud->addButtonFromView('line', 'generate_pdf-editmode', 'void', 'end');
+        $this->crud->addButtonFromView('line', 'show', 'void', 'end');
 
+        // Se agrega una operación usando una vista blade
+        $this->crud->addButtonFromView('line', 'actions', 'generate_pdf.actions', 'beginning');
+
+        $this->addColumns();
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
