@@ -92,6 +92,7 @@ class ViewFormController extends Controller
             'message' => 'Formulario guardado como borrador',
             'success' => true,
             'filePath' => $path,
+            'urlFilePath' => asset( 'storage/'.$path),
             'downloadName' => $downloadName,
             'data' => [
                 'generate_pdf' => $generatePDF->id,

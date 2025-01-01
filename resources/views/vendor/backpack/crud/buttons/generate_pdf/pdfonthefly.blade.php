@@ -1,8 +1,9 @@
 @if ($crud->hasAccess('generate_pdf-pdfonthefly'))
     @if ($entry->generated === 1)
         <a href="javascript:void(0)" onclick="pdfOnTheFlyEntry(this)"
-            data-entry_path="{{ asset('storage/' . $entry->path) }}"
-            data-entry_download="{{ $entry->download }}"
+            data-route="{{ route('api.v1.view-form.save_pdf', ['id' => $entry->file_pdf_id]) }}"
+            data-entry="{{ $entry }}"
+            data-entry_file_storage="{{ asset('storage/' . $entry->file_pdf->file_storage) }}"
             data-button-type="generate_pdf-pdfonthefly"
             class="btn btn-sm btn-link">
             <i class="la la-magic"></i> PDFOnTheFly

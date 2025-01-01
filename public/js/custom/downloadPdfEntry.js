@@ -9,7 +9,7 @@
  *****************************************************/
 
 if (typeof downloadPdfEntry != 'function') {
-    $("[data-button-type=delete]").unbind('click');
+    $("[data-button-type=generate_pdf-downloadpdf]").unbind('click');
 
     function downloadPdfEntry(button) {
 
@@ -25,7 +25,7 @@ if (typeof downloadPdfEntry != 'function') {
             new Noty({
                 type: "error",
                 title: "Petición",
-                text: `<strong>Este elemeno no está generado</strong><br>`
+                text: `<strong>Este elemento no está generado</strong><br>`
             }).show();
             return;
         }

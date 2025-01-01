@@ -1,7 +1,7 @@
 
 /*****************************************************
  * Victor J.
- * Este función sirve para ejecutar lógica de la operación de `DownloadPDFOperation`
+ * Este función sirve para ejecutar lógica de la operación de `PreviewPDFOperation`
  *
  * @created 31/12/2024
  * @created 31/12/2024
@@ -9,7 +9,7 @@
  *****************************************************/
 
 if (typeof previewPdfEntry != 'function') {
-    $("[data-button-type=delete]").unbind('click');
+    $("[data-button-type=generate_pdf-previewpdf]").unbind('click');
 
     function previewPdfEntry(button) {
 
@@ -30,39 +30,8 @@ if (typeof previewPdfEntry != 'function') {
             return;
         }
 
-        Swal.fire({
-            html: `
-            <object
-                data= "${entry_path}"
-                type= "application/pdf"
-                width= "100%"
-                height= "400px"
-                title= "Visor de PDF integrado"
-            >
-                <iframe
-                    src= "${entry_path}"
-                    width= "100%"
-                    height= "100%"
-                    style= "border: none"
-                    title= "Visor de PDF integrado, respaldo de iframe"
-                >
-                    <p>
-                        Su navegador no admite archivos PDF. <a href= "${entry_path}" >
-                        Descargar el PDF</a>
-                    </p>
-                </iframe>
-            </object>
-            `,
-            width: '800px',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            showCancelButton: false,
-            showCloseButton: true,
-            customClass: {
-                popup: 'swal-wide'
-            }
-        });
-
+        // Mostrar el archivo PDF
+        fnIframeFilePDFPreview(entry_path);
     }
 }
 
