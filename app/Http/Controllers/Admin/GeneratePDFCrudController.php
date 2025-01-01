@@ -21,6 +21,7 @@ class GeneratePDFCrudController extends CrudController
 
     use \App\Http\Controllers\Admin\Operations\GeneratePDF\EditModeOperation;
     use \App\Http\Controllers\Admin\Operations\GeneratePDF\DownloadPDFOperation;
+    use \App\Http\Controllers\Admin\Operations\GeneratePDF\PreviewPDFOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
