@@ -33,6 +33,11 @@
         <a href="{{ url($crud->route.'/'.$entry->getKey().'/show') }}" class="dropdown-item pointer">
             <i class="la la-eye"></i> Vista previa
         </a>
+        <a href="javascript:void(0)" onclick="deleteEntry(this)"
+            data-route="{{ url($crud->route.'/'.$entry->getKey()) }}"
+            class="dropdown-item pointer">
+            <i class="la la-trash"></i> Eliminar
+        </a>
     </div>
 </div>
 
@@ -45,6 +50,7 @@
     <script src="{{ asset('js/custom/pdfOnTheFlyEntry.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
     <script src="{{ asset('js/custom/previewPdfEntry.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
     <script src="{{ asset('js/custom/downloadPdfEntry.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
+    <script src="{{ asset('js/custom/deleteEntry.js').'?v='.config('backpack.base.cachebusting_string') }}"></script>
 @if (!request()->ajax())
 @endpush
 @endif
