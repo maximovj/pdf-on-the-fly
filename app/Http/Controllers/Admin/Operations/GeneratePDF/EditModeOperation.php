@@ -34,7 +34,7 @@ trait EditModeOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             // $this->crud->addButton('top', 'generate_pdf-editmode', 'view', 'crud::buttons.editmode');
             $this->crud->addButton('line', 'generate_pdf-editmode', 'view', 'crud::buttons.generate_pdf.editmode', 'beginning');
         });

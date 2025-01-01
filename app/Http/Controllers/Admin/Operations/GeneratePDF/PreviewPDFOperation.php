@@ -33,7 +33,7 @@ trait PreviewPDFOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             // $this->crud->addButton('top', 'generate_pdf-previewpdf', 'view', 'crud::buttons.previewpdf');
             $this->crud->addButton('line', 'generate_pdf-previewpdf', 'view', 'crud::buttons.generate_pdf.previewpdf', 'beginning');
         });

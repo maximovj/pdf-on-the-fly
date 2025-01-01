@@ -29,7 +29,7 @@ trait DownloadPDFOperation
             $this->crud->loadDefaultOperationSettingsFromConfig();
         });
 
-        $this->crud->operation('list', function () {
+        $this->crud->operation(['list', 'show'], function () {
             // $this->crud->addButton('top', 'generate_pdf-downloadpdf', 'view', 'crud::buttons.downloadpdf');
             $this->crud->addButton('line', 'generate_pdf-downloadpdf', 'view', 'crud::buttons.generate_pdf.downloadpdf', 'beginning');
         });
