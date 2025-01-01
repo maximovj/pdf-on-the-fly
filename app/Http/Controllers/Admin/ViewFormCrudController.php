@@ -78,15 +78,15 @@ class ViewFormCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'name' => 'file_pdf.name',
+            'name' => 'name',
             'type' => 'text',
-            'label' => 'Nombre del archivo',
+            'label' => 'Nombre del formulario',
         ]);
 
         $this->crud->addColumn([
-            'name' => 'file_pdf.description',
+            'name' => 'file_pdf.file_name',
             'type' => 'text',
-            'label' => 'Descripción del archivo',
+            'label' => 'Nombre del archivo',
         ]);
 
         $this->crud->addColumn([

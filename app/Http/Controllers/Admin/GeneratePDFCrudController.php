@@ -85,12 +85,6 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->column('id');
 
         $this->crud->addColumn([
-            'name' => 'ip',
-            'type' => 'text',
-            'label' => 'Dirección IP',
-        ]);
-
-        $this->crud->addColumn([
             'name' => 'name',
             'type' => 'text',
             'label' => 'Nombre',
