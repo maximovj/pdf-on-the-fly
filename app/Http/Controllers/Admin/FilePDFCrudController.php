@@ -32,7 +32,6 @@ class FilePDFCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/file-pdf');
         CRUD::setEntityNameStrings('Archivos PDF', 'Archivos PDF');
 
-        Widget::name('card')->content('some other content');
     }
 
     /**
@@ -68,6 +67,7 @@ class FilePDFCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->addWidgets();
         $this->addColumns();
 
         /**
@@ -75,6 +75,25 @@ class FilePDFCrudController extends CrudController
          * - CRUD::column('price')->type('number');
          * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
          */
+    }
+
+    /**
+     * Widgets (aka cards, aka charts, aka graphs) provide a simple way to insert blade files into admin panel pages.
+     * You can use them to insert cards, charts, notices or custom content into pages.
+     *
+     * @see  https://backpackforlaravel.com/docs/4.1/base-widgets#widgets-api-1
+     *
+     * @return void
+     */
+    protected function addWidgets()
+    {
+
+        Widget::add()
+            ->to('before_content')
+            ->type('file_pdf-note')
+            ->content(null)
+            ->name('file_pdf-note-widget');
+
     }
 
     protected function addColumns()

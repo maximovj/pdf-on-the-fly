@@ -51,13 +51,7 @@ $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
 
         @php
             Widget::add([
-                'type'         => 'my-alert-advanced',
-                'class'        => 'alert alert-warning mb-2 fs-14',
-                'header'       => '<b>NOTA</b>',
-                'body'         => 'Al producir un cambio en el formulario, automáticamente el sistema creará un borrador con todas las respuestas.<br/>
-                                Al presionar el botón de <span class="badge badge-success"><i class="la la-check-circle"></i> Generar PDF</span>, automáticamente el sistema registrará el archivo generado con el estado de <span class="badge badge-success">generado</span>.<br/>',
-                'footer'       => 'Los borradores y los archivos PDF generados, están listados <a href="'.route('generate-pdf.index').'">aquí</a>',
-                'close_button' => true, // mostrar el botón de cierre o no
+                'type' => 'views_forms-message',
             ]);
         @endphp
 
