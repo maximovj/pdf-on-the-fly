@@ -57,7 +57,7 @@ class GeneratePDFCrudController extends CrudController
         $this->crud->addColumn([
             'name'     => 'fields',
             'label'    => 'Respuestas (JSON)',
-            'type'     => 'json',
+            'type'     => 'toggle_json',
             'escaped' => false //optional, if the "value" should be escaped when displayed in the page.
         ]);
 

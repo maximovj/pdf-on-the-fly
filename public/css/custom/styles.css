@@ -631,3 +631,16 @@ div.dataTables_wrapper {
 .sticky + .content {
     padding-top: 60px;
 }
+
+
+/*******************************************
+* CSS OPACITY
+********************************************/
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-1 {
+    opacity: 1;
+}
