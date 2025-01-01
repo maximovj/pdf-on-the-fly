@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\FilePDF;
+use Illuminate\Support\Facades\DB;
+use Prologue\Alerts\Facades\Alert;
 use App\Http\Requests\GeneratePDFRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -64,6 +67,8 @@ class GeneratePDFCrudController extends CrudController
     {
 
         $this->addColumns();
+        $this->addFilters();
+        $this->crud->filters(); // gets all the filters
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -125,6 +130,105 @@ class GeneratePDFCrudController extends CrudController
             'type' => 'number',
             'label' => 'Versión',
         ]);
+
+        $this->crud->addColumn([
+            'name' => 'updated_at',
+            'type' => 'date',
+            'label' => 'Última actualización',
+        ]);
+
+    }
+
+    /**
+     * Backpack CRUD allows you to show a filters bar right above the entries table.
+     * When selected or modified, they reload the DataTables results.
+     * The search will then search within the filtered elements.
+     *
+     * @see  https://backpackforlaravel.com/docs/4.1/crud-filters
+     * @return void
+     */
+    protected function addFilters()
+    {
+        // Filtrar por archivos PDF disponibles
+        $this->crud->addFilter([
+            'name' => 'filter_file_pdf_id',
+            'type' => 'dropdown',
+            'label' => 'Archivos PDF',
+        ],
+        $values = function() {
+            $arr_files_pdf = FilePDF::query()
+            ->select(DB::raw('CONCAT(name," | ", file_name) AS full_name'), 'id')
+            ->pluck('full_name', 'id')
+            ->toArray();
+
+            return $arr_files_pdf;
+        },
+        $filterLogic = function($value) {
+            $this->crud->addClause('where', 'file_pdf_id', '=', $value);
+        },
+        $fallbackLogic = false);
+
+        // Filtro paa filtrar por rango de fecha
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'range_updated_at',
+            'label' => 'Última actualización',
+        ],
+        $values = false,
+        $filterLogic = function($value) {
+            $dates = json_decode($value);
+            $this->crud->addClause('where', 'updated_at', '>=', $dates->from);
+            $this->crud->addClause('where', 'updated_at', '<=', $dates->to . ' 23:59:59');
+        },
+        $fallbackLogic = false);
+
+        // Filtro paa filtrar por nombre del formulario
+        $this->crud->addFilter([
+            'type' => 'text',
+            'name' => 'view_form_name',
+            'label' => 'Nombre del formulario',
+        ],
+        $values = false,
+        $filterLogic = function($value) {
+            // Usar la relación de la taba `view_form` dentro del modelo
+            $this->crud->addClause('whereHas', 'view_form', function($query) use ($value) {
+                // Buscar el nombre del archivo
+                $query->where('name', 'like', "%$value%");
+            });
+        },
+        $fallbackLogic = false);
+
+        // Filtro paa filtrar borradores
+        $this->crud->addFilter([
+            'type'  => 'simple',
+            'name'  => 'draft',
+            'label' => 'Borradores'
+        ],
+    false, // the simple filter has no values, just the "Draft" label specified above
+        function() { // if the filter is active (the GET parameter "draft" exits)
+            $this->crud->addClause('where', 'generated', 0);
+            // we've added a clause to the CRUD so that only elements with draft=1 are shown in the table
+            // an alternative syntax to this would have been
+            // $this->crud->query = $this->crud->query->where('draft', 0);
+            // another alternative syntax, in case you had a scopeDraft() on your model:
+            // $this->crud->addClause('draft');
+        });
+
+        // Filtro paa filtrar generados
+        $this->crud->addFilter([
+            'type'  => 'simple',
+            'name'  => 'generated',
+            'label' => 'Generados'
+        ],
+    false, // the simple filter has no values, just the "generated" label specified above
+        function() { // if the filter is active (the GET parameter "generated" exits)
+            $this->crud->addClause('where', 'generated', 1);
+            // we've added a clause to the CRUD so that only elements with draft=1 are shown in the table
+            // an alternative syntax to this would have been
+            // $this->crud->query = $this->crud->query->where('generated', 1);
+            // another alternative syntax, in case you had a scopeDraft() on your model:
+            // $this->crud->addClause('generated');
+        });
 
     }
 
