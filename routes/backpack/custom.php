@@ -19,4 +19,5 @@ Route::group([
     Route::crud('file-pdf', 'FilePDFCrudController');
     Route::crud('generate-pdf', 'GeneratePDFCrudController');
     Route::crud('view-form', 'ViewFormCrudController');
+    Route::get('charts/weekly-users', 'Charts\WeeklyUsersChartController@response')->name('charts.weekly-users.index');
 }); // this should be the absolute last line of this file
