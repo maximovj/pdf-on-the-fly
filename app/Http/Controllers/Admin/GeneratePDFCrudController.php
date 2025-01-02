@@ -72,7 +72,7 @@ class GeneratePDFCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
+        $this->crud->orderBy('updated_at', 'desc');
         $this->addColumns();
         $this->addFilters();
         $this->crud->filters(); // gets all the filters
@@ -101,18 +101,54 @@ class GeneratePDFCrudController extends CrudController
             'name' => 'view_form.name',
             'type' => 'text',
             'label' => 'Nombre del formulario',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('views_forms', 'generates_pdf.view_form_id', '=', 'views_forms.id') // Realiza el join automáticamente
+                    ->orderBy('views_forms.name', $columnDirection ?? 'asc');
+            },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('view_form', function ($q) use ($column, $searchTerm) {
+                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
-            'name' => 'file_pdf.file_name',
+            'name' => 'file_pdf.file_name', // Relación seguida del campo relacionado
             'type' => 'text',
             'label' => 'Nombre del archivo',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
+                    ->orderBy('files_pdf.file_name', $columnDirection ?? 'asc');
+            },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('file_pdf', function ($q) use ($column, $searchTerm) {
+                    $q->where('file_name', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
             'name' => 'file_pdf.file_extension',
             'type' => 'text',
             'label' => 'Extensión del archivo',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
+                    ->orderBy('files_pdf.file_extension', $columnDirection ?? 'asc');
+            },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('file_pdf', function ($q) use ($column, $searchTerm) {
+                    $q->where('file_extension', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
@@ -130,12 +166,35 @@ class GeneratePDFCrudController extends CrudController
                     return 'badge badge-default';
                 },
             ],
+            /*
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                //$query->orWhere('generated', '=',  $searchTerm == 'Generado' ? 1 : 0);
+
+                $count_term_0 = substr_count(strtolower($searchTerm), strtolower("Borrador"));
+                $count_term_1 = substr_count(strtolower($searchTerm), strtolower("Generado"));
+
+                if($count_term_1 > 0) {
+                    $query->orWhere('generated', '=', 1);
+                }else
+                if($count_term_0 > 0) {
+                    $query->orWhere('generated', '=', 0);
+                } else {
+                    $query->orWhere('generated', '=', 0)
+                        ->orWhere('generated', '=', 1);
+                }
+            },
+            */
         ]);
 
         $this->crud->addColumn([
             'name' => 'count',
             'type' => 'number',
             'label' => 'Versión',
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('count', 'like', '%'.$searchTerm.'%');
+            },
         ]);
 
         $this->crud->addColumn([
