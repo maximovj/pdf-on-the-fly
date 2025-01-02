@@ -76,7 +76,7 @@
 
 .bg-slate {
     background-color: #d5d5d5 !important;
-    color: #444444 !important;
+    color: #ffffff !important;
 }
 
 .bg-green {
@@ -97,7 +97,7 @@
 }
 
 .bg-type-2 {
-    background-color: #1994e0 !important;
+    background-color: #48b3f6 !important;
     color: white;
 }
 
@@ -140,6 +140,14 @@
  * CSS Text
  *******************************************/
 
+.txt-slate-dark {
+    color: #404040;
+}
+
+.txt-slate-dark:hover {
+    color: #404040;
+}
+
 .txt-black {
     color: black;
 }
@@ -147,7 +155,6 @@
 .txt-black:hover {
     color: black;
 }
-
 
 .txt-white {
     color: white;
@@ -398,6 +405,14 @@ div.dataTables_wrapper {
     color: none;
     background-color: transparent;
     border: none;
+}
+
+.a-link:hover {
+    font-weight: 600;
+}
+
+.a-link:hover::before {
+    content: '> ';
 }
 
 /*******************************************

@@ -28,7 +28,7 @@
             'value'       => \App\Models\FilePDF::count(),
             'description' => 'Archivos PDF',
             'progress'    => 0, // integer
-            'hint'        => 'Archivos PDF de tipo formulario.',
+            'hint'        => '<a href="'.route('file-pdf.index').'" class="txt-slate-dark a-link">Archivos PDF de tipo formulario</a>',
         ],
         [
             'type'        => 'progress',
@@ -36,7 +36,7 @@
             'value'       => \App\Models\ViewForm::count()  ,
             'description' => 'Formularios',
             'progress'    => 0, // integer
-            'hint'        => 'Formularios vinculados con un archivo PDF',
+            'hint'        => '<a href="'.route('view-form.index').'" class="txt-slate-dark a-link">Formularios enlazado con un archivo PDF</a>',
         ],
         [
             'type'        => 'progress',
@@ -44,7 +44,7 @@
             'value'       => App\Models\GeneratePDF::countGenerated(),
             'description' => 'Generado',
             'progress'    => 0, // integer
-            'hint'        => 'Formulario generado en PDF',
+            'hint'        => '<a href="'.route('generate-pdf.index', ['generated' => 'true']).'" class="txt-slate-dark a-link">Formulario generado en PDF</a>',
         ],
         [
             'type'        => 'progress',
@@ -52,7 +52,7 @@
             'value'       => App\Models\GeneratePDF::countDraft(),
             'description' => 'Borrador',
             'progress'    => 0, // integer
-            'hint'        => 'Formulario guardado como borrador.',
+            'hint'        =>  '<a href="'.route('generate-pdf.index', ['draft' => 'true']).'" class="txt-slate-dark a-link">Formulario guardado como borrador</a>',
         ],
     ]);
 @endphp
