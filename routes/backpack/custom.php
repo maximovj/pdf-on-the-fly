@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
 
 // --------------------------
 // Custom Backpack Routes
@@ -16,6 +17,11 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+
+    // Se sobrescribe la ruta `dashboard` y `\`
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('backpack.dashboard');
+    Route::get('/', [AdminController::class, 'redirect'])->name('backpack');
+
     Route::crud('file-pdf', 'FilePDFCrudController');
     Route::crud('generate-pdf', 'GeneratePDFCrudController');
     Route::crud('view-form', 'ViewFormCrudController');
