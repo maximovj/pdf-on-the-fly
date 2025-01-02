@@ -42,7 +42,7 @@ return [
     'actions'                   => 'Acciones',
     'preview'                   => 'Vista previa',
     'delete'                    => 'Eliminar',
-    'admin'                     => 'Admin',
+    'admin'                     => 'Panel',
     'details_row'               => 'Esta es la fila de detalles. Modificar a su gusto.',
     'details_row_loading_error' => 'Se ha producido un error al cargar los datos. Por favor, intente de nuevo.',
     'clone'                     => 'Clonar',

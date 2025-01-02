@@ -3,6 +3,7 @@
 @section('content')
 @php
     Widget::add()
+    ->to('before_content')
     ->type('div')
     ->class('row mb-2')
     ->content([
@@ -17,6 +18,48 @@
 
 @php
     Widget::add()
+    ->to('before_content')
+    ->type('div')
+    ->class('row mb-2')
+    ->content([
+        [
+            'type'        => 'progress',
+            'class'       => 'card text-white bg-type-2 mb-2',
+            'value'       => \App\Models\FilePDF::count(),
+            'description' => 'Archivos PDF',
+            'progress'    => 0, // integer
+            'hint'        => '<a href="'.route('file-pdf.index').'" class="txt-slate-dark a-link">Archivos PDF de tipo formulario</a>',
+        ],
+        [
+            'type'        => 'progress',
+            'class'       => 'card text-white bg-type-4 mb-2',
+            'value'       => \App\Models\ViewForm::count()  ,
+            'description' => 'Formularios',
+            'progress'    => 0, // integer
+            'hint'        => '<a href="'.route('view-form.index').'" class="txt-slate-dark a-link">Formularios enlazado con un archivo PDF</a>',
+        ],
+        [
+            'type'        => 'progress',
+            'class'       => 'card text-white bg-type-5 mb-2',
+            'value'       => App\Models\GeneratePDF::countGenerated(),
+            'description' => 'Generado',
+            'progress'    => 0, // integer
+            'hint'        => '<a href="'.route('generate-pdf.index', ['generated' => 'true']).'" class="txt-slate-dark a-link">Formulario generado en PDF</a>',
+        ],
+        [
+            'type'        => 'progress',
+            'class'       => 'card txt-black bg-slate mb-2',
+            'value'       => App\Models\GeneratePDF::countDraft(),
+            'description' => 'Borrador',
+            'progress'    => 0, // integer
+            'hint'        =>  '<a href="'.route('generate-pdf.index', ['draft' => 'true']).'" class="txt-slate-dark a-link">Formulario guardado como borrador</a>',
+        ],
+    ]);
+@endphp
+
+@php
+    Widget::add()
+    ->to('before_content')
     ->type('div')
     ->class('row mb-2')
     ->content([

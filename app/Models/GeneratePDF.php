@@ -81,6 +81,22 @@ class GeneratePDF extends Model
         ->sum('count');
     }
 
+    public function scopeCountGenerated($query)
+    {
+        return $query
+        ->where('ip', '=', request()->ip())
+        ->where('generated', '=', 1)
+        ->count();
+    }
+
+    public function scopeCountDraft($query)
+    {
+        return $query
+        ->where('ip', '=', request()->ip())
+        ->where('generated', '=', 0)
+        ->count();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS
