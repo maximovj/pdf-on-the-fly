@@ -166,10 +166,25 @@ class GeneratePDFCrudController extends CrudController
                     return 'badge badge-default';
                 },
             ],
+            /*
             'searchable' => true, // Esto activa la búsqueda
             'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhere('generated', 'like', '%'.$searchTerm.'%');
+                //$query->orWhere('generated', '=',  $searchTerm == 'Generado' ? 1 : 0);
+
+                $count_term_0 = substr_count(strtolower($searchTerm), strtolower("Borrador"));
+                $count_term_1 = substr_count(strtolower($searchTerm), strtolower("Generado"));
+
+                if($count_term_1 > 0) {
+                    $query->orWhere('generated', '=', 1);
+                }else
+                if($count_term_0 > 0) {
+                    $query->orWhere('generated', '=', 0);
+                } else {
+                    $query->orWhere('generated', '=', 0)
+                        ->orWhere('generated', '=', 1);
+                }
             },
+            */
         ]);
 
         $this->crud->addColumn([
