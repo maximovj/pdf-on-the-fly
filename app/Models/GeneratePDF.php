@@ -70,7 +70,15 @@ class GeneratePDF extends Model
         ->where('ip', '=', request()->ip())
         ->where('file_pdf_id', '=', $file_pdf_id)
         ->where('generated', '=', 1)
-        ->whereDate('created_at', today())->count();
+        ->count();
+    }
+
+    public function scopeCountVersions($query, int $file_pdf_id)
+    {
+        return $query
+        ->where('ip', '=', request()->ip())
+        ->where('file_pdf_id', '=', $file_pdf_id)
+        ->sum('count');
     }
 
     /*
