@@ -106,7 +106,13 @@ class GeneratePDFCrudController extends CrudController
                 return $query
                     ->join('views_forms', 'generates_pdf.view_form_id', '=', 'views_forms.id') // Realiza el join automáticamente
                     ->orderBy('views_forms.name', $columnDirection ?? 'asc');
-            }
+            },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('view_form', function ($q) use ($column, $searchTerm) {
+                    $q->where('name', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
@@ -119,6 +125,12 @@ class GeneratePDFCrudController extends CrudController
                     ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
                     ->orderBy('files_pdf.file_name', $columnDirection ?? 'asc');
             },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('file_pdf', function ($q) use ($column, $searchTerm) {
+                    $q->where('file_name', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
@@ -130,7 +142,13 @@ class GeneratePDFCrudController extends CrudController
                 return $query
                     ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
                     ->orderBy('files_pdf.file_extension', $columnDirection ?? 'asc');
-            }
+            },
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhereHas('file_pdf', function ($q) use ($column, $searchTerm) {
+                    $q->where('file_extension', 'like', '%'.$searchTerm.'%');
+                });
+            },
         ]);
 
         $this->crud->addColumn([
@@ -148,12 +166,20 @@ class GeneratePDFCrudController extends CrudController
                     return 'badge badge-default';
                 },
             ],
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('generated', 'like', '%'.$searchTerm.'%');
+            },
         ]);
 
         $this->crud->addColumn([
             'name' => 'count',
             'type' => 'number',
             'label' => 'Versión',
+            'searchable' => true, // Esto activa la búsqueda
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('count', 'like', '%'.$searchTerm.'%');
+            },
         ]);
 
         $this->crud->addColumn([
