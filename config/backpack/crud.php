@@ -27,7 +27,7 @@ return [
 
             // stores pagination and filters in localStorage for two hours
             // whenever the user tries to see that page, backpack loads the previous pagination and filtration
-            'persistentTable' => true,
+            'persistentTable' => false,
 
             // show search bar in the top-right corner?
             'searchableTable' => true,
@@ -42,12 +42,12 @@ return [
             // How many items should be shown by default by the Datatable?
             // This value can be overwritten on a specific CRUD by calling
             // $this->crud->setDefaultPageLength(50);
-            'defaultPageLength' => 10,
+            'defaultPageLength' => 30,
 
             // A 1D array of options which will be used for both the displayed option and the value, or
             // A 2D array in which the first array is used to define the value options and the second array the displayed options
             // If a 2D array is used, strings in the right hand array will be automatically run through trans()
-            'pageLengthMenu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'backpack::crud.all']],
+            'pageLengthMenu' => [[30, 50, 100, 200, 300, 600, -1], [30, 50, 100, 200, 300, 600, 'backpack::crud.all']],
 
             // How important is it for the action buttons to be visible?
             // - 0 - most important
@@ -84,11 +84,11 @@ return [
 
             // Where do you want to redirect the user by default, save?
             // options: save_and_back, save_and_edit, save_and_new
-            'defaultSaveAction' => 'save_and_back',
+            'defaultSaveAction' => 'save_and_edit',
 
             // When the user chooses "save and back" or "save and new", show a bubble
             // for the fact that the default save action has been changed?
-            'showSaveActionChange' => true, //options: true, false
+            'showSaveActionChange' => false, //options: true, false
 
             // Should we show a cancel button to the user?
             'showCancelButton' => true,
@@ -124,7 +124,7 @@ return [
 
             // When the user chooses "save and back" or "save and new", show a bubble
             // for the fact that the default save action has been changed?
-            'showSaveActionChange' => true, //options: true, false
+            'showSaveActionChange' => false, //options: true, false
 
             // Should we show a cancel button to the user?
             'showCancelButton' => true,
@@ -162,7 +162,7 @@ return [
     |-------------------
     */
 
-    'show_translatable_field_icon'     => true,
+    'show_translatable_field_icon'     => false,
     'translatable_field_icon_position' => 'right', // left or right
 
     'locales' => [

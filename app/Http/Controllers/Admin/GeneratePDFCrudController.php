@@ -72,7 +72,7 @@ class GeneratePDFCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
+        $this->crud->orderBy('updated_at', 'desc');
         $this->addColumns();
         $this->addFilters();
         $this->crud->filters(); // gets all the filters
@@ -101,18 +101,36 @@ class GeneratePDFCrudController extends CrudController
             'name' => 'view_form.name',
             'type' => 'text',
             'label' => 'Nombre del formulario',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('views_forms', 'generates_pdf.view_form_id', '=', 'views_forms.id') // Realiza el join automáticamente
+                    ->orderBy('views_forms.name', $columnDirection ?? 'asc');
+            }
         ]);
 
         $this->crud->addColumn([
-            'name' => 'file_pdf.file_name',
+            'name' => 'file_pdf.file_name', // Relación seguida del campo relacionado
             'type' => 'text',
             'label' => 'Nombre del archivo',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
+                    ->orderBy('files_pdf.file_name', $columnDirection ?? 'asc');
+            },
         ]);
 
         $this->crud->addColumn([
             'name' => 'file_pdf.file_extension',
             'type' => 'text',
             'label' => 'Extensión del archivo',
+            'orderable' => true, // Esto activa el ordenamiento
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query
+                    ->join('files_pdf', 'generates_pdf.file_pdf_id', '=', 'files_pdf.id') // Realiza el join automáticamente
+                    ->orderBy('files_pdf.file_extension', $columnDirection ?? 'asc');
+            }
         ]);
 
         $this->crud->addColumn([
