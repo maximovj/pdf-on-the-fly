@@ -79,7 +79,7 @@ class FilePDF extends Model
         $file = request()->file($field_file);
 
         // Verificar si se sube un archivo
-        if($file){
+        if($file) {
             $extension_file = request()->file($field_file)->getClientOriginalExtension();
             $tipo_archivo = request()->file($field_file)->getClientMimeType();
 
@@ -100,6 +100,8 @@ class FilePDF extends Model
                 $this->attributes[$field_file] = $url_storage.'/'.$filename;
                 Storage::disk($disk)->putFileAs($url_storage, $file, $filename);
             }
+        } else if(Storage::exists($value)) {
+            $this->attributes[$field_file] = $value;
         }
 
     }
