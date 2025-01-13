@@ -23,7 +23,7 @@ class FilePDFFactory extends Factory
             'description' => Str::substr($this->faker->paragraph(), 0, 60),
             'file_name' => Str::slug(Str::substr($this->faker->paragraph(), 0, 12)).'.pdf',
             'file_extension' => '.pdf',
-            'file_storage' => null,
+            'file_storage' => 'path',
             'created_at' => now(),
             'updated_at' => now(),
         ];

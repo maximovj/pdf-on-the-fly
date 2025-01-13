@@ -7,9 +7,6 @@ use Illuminate\Database\Seeder;
 
 class GeneratePDFSeeder extends Seeder
 {
-
-    protected $model = GeneratePDF::class;
-
     /**
      * Run the database seeds.
      *

@@ -1,0 +1,57 @@
+version: '3.8'
+
+networks:
+  pdfonthefly-net:
+    driver: bridge
+
+services:
+  service_db:
+    image: mysql:5.7
+    container_name: pdfonthefly-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db_pdfonthefly
+      MYSQL_USER: pdfonthefly_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - pdfonthefly-net
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_spanish2_ci
+
+  service_app:
+    image: shinsenter/laravel:php8.1
+    container_name: pdfonthefly
+    environment:
+      DB_HOST: service_db
+      DB_DATABASE: db_pdfonthefly
+      DB_USERNAME: pdfonthefly_user
+      DB_PASSWORD: password
+      APP_URL: http://192.168.33.90
+      FILESYSTEM_DISK: public
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - pdfonthefly-net
+    command: |
+      /bin/bash -c "
+        composer install --ignore-platform-reqs &&
+        php artisan key:generate &&
+        php artisan migrate --force &&
+        # npm install --production &&
+        php artisan optimize &&
+        php artisan config:cache &&
+        php artisan config:clear &&
+        php artisan cache:clear &&
+        php artisan view:clear &&
+        php artisan route:clear &&
+        php artisan db:seed --class=DatabaseSeeder &&
+        php artisan app:publish-storage &&
+        nginx -g 'daemon off;'
+      "
+    depends_on:
+      - service_db
