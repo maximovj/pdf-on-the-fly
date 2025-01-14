@@ -86,3 +86,7 @@ Felicidades ya puedes acceder a los sitios del proyecto, que son:
 ![preview01.jpg](/screenshots/preview_05.jpg)
 
 ![preview05.jpg](/screenshots/preview_06.jpg)
+
+![preview07.jpg](/screenshots/preview_07.jpg)
+
+![preview08.jpg](/screenshots/preview_08.jpg)
