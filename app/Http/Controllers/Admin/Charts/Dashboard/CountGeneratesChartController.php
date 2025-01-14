@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Charts;
+namespace App\Http\Controllers\Admin\Charts\Dashboard;
 
 use App\Models\GeneratePDF;
-use Backpack\CRUD\app\Http\Controllers\ChartController;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
+use Backpack\CRUD\app\Http\Controllers\ChartController;
 
 /**
- * Class WeeklyUsersChartController
+ * Class CountGeneratesChartController
  * @package App\Http\Controllers\Admin\Charts
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class WeeklyUsersChartController extends ChartController
+class CountGeneratesChartController extends ChartController
 {
     public function setup()
     {
@@ -25,7 +25,7 @@ class WeeklyUsersChartController extends ChartController
         ]);
 
         // RECOMMENDED. Set URL that the ChartJS library should call, to get its data using AJAX.
-        $this->chart->load(backpack_url('charts/weekly-users'));
+        $this->chart->load(backpack_url('charts/dashboard/count-generates'));
 
         // OPTIONAL
         $this->chart->minimalist(false);

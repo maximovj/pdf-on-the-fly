@@ -65,7 +65,7 @@
     ->content([
         [
             'type'       => 'chart',
-            'controller' => \App\Http\Controllers\Admin\Charts\WeeklyUsersChartController::class,
+            'controller' => \App\Http\Controllers\Admin\Charts\Dashboard\CountGeneratesChartController::class,
             // OPTIONALS
             'class'   => 'card mb-2',
             'wrapper' => ['class'=> 'col-md-6'] ,

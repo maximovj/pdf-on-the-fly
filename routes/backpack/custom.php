@@ -25,6 +25,6 @@ Route::group([
     Route::crud('file-pdf', 'FilePDFCrudController');
     Route::crud('generate-pdf', 'GeneratePDFCrudController');
     Route::crud('view-form', 'ViewFormCrudController');
-    Route::get('charts/weekly-users', 'Charts\WeeklyUsersChartController@response')->name('charts.weekly-users.index');
     Route::get('charts/dashboard/count-versions', 'Charts\\Dashboard\\CountVersionsChartController@response')->name('charts.dashboard.count-versions.index');
+    Route::get('charts/dashboard/count-generates', 'Charts\\Dashboard\\CountGeneratesChartController@response')->name('charts.dashboard.count-generates.index');
 }); // this should be the absolute last line of this file
